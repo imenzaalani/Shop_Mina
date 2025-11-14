@@ -9,7 +9,7 @@
     <div class="hero-center-content">
       <div class="hero-left-subtitle">shopmina</div>
       <div class="hero-left-title">Unique y2k<br>Clothing</div>
-        <a class="hero-left-link" href='#collections-section'>Explore Collections</a>
+        <a class="hero-left-link" (click)="$event.preventDefault(); scrollToSection('collections-section')" style="cursor: pointer;">Explore Collections</a>
     </div>
   </div>
   <div class="hero-bottom-text">

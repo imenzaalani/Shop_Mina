@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ProductService, Product } from '../../services/product/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,RouterLink } from '@angular/router';
 import { ProductCard } from '../product-card/product-card';
 
 interface ProductCollection {
@@ -16,7 +16,7 @@ interface ProductCollection {
 
 @Component({
   selector: 'app-collections',
-  imports: [ProductCard],
+  imports: [ProductCard,RouterLink],
   templateUrl: './collections.html',
   styleUrl: './collections.css',
 })
