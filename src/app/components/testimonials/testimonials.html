@@ -1,1 +1,96 @@
-<p>testimonials works!</p>
+<section class="testimonials-section">
+  <h2 class="testimonials-title">OUR CUSTOMERS SAY IT BETTER THAN US!</h2>
+  <div class="rating-summary">
+    <p class="excellent-rating">Excellent 4.7 / 5</p>
+    <div class="stars">
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-solid fa-star"></i>
+      <i class="fa-regular fa-star"></i>
+    </div>
+    <p class="reviews-count">based on 1,067 reviews</p>
+  </div>
+
+  <div class="reviews-carousel">
+    <button class="carousel-arrow left-arrow" (click)="scroll('left')">&#10094;</button>
+    <div class="reviews-grid" #reviewsGrid>
+      <div class="review-card">
+        <div class="card-header">
+          <div class="stars-green">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <h4>Perfect</h4>
+        </div>
+        <p class="review-text">I'm utterly skeptical before but wow, what a journey! My Y2K beanie and cargo pants are my favorite pieces from the wardrobe. Not only is the clothing is good, but they are so comfortable to wear. The delivery was super fast, and the customer service is super responsive. I'm truly satisfied!</p>
+        <p class="reviewer-name">Dora</p>
+      </div>
+
+      <div class="review-card">
+        <div class="card-header">
+          <div class="stars-green">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <h4>Nugget</h4>
+        </div>
+        <p class="review-text">I finally found Y2K clothing that holds up! My beanie and my full zip jacket are exactly what I was looking for: modern and retro at the same time. The comfort is great, and I feel really good in it. In addition, the delivery was super fast. I'll be back for more, that's for sure!</p>
+        <p class="reviewer-name">Emillie</p>
+      </div>
+
+      <div class="review-card">
+        <div class="card-header">
+          <div class="stars-green">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <h4>Y2K style at its best</h4>
+        </div>
+        <p class="review-text">The Y2K clothes I bought here are just amazing. My beanie, pants and full zip jacket are not only top quality, but also super comfortable. I love the details and the vintage look, I recommend 100%!</p>
+        <p class="reviewer-name">Paul</p>
+      </div>
+
+      <div class="review-card">
+        <div class="card-header">
+          <div class="stars-green">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <h4>Mode Y2K</h4>
+        </div>
+        <p class="review-text">My shopping experience was perfect! The cargo pants and beanie are exactly what I was looking for to complete my Y2K style. Fast delivery and quality products that totally won me over. I will definitely come back!</p>
+        <p class="reviewer-name">Marc</p>
+      </div>
+
+      <div class="review-card">
+        <div class="card-header">
+          <div class="stars-green">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <h4>Impeccable service</h4>
+        </div>
+        <p class="review-text">I ordered a full zip jacket and a matching skirt for my daughter, and she couldn't be happier. The products are super quality, correspond to the photos, and my daughter loves her new outfit. Very happy with my purchase</p>
+        <p class="reviewer-name">Cathrine</p>
+      </div>
+
+    </div>
+    <button class="carousel-arrow right-arrow" (click)="scroll('right')">&#10095;</button>
+  </div>
+</section>

@@ -1,1 +1,18 @@
-<p>collections works!</p>
+<section class="collections-section" id="collections-section">
+  <h2 class="collections-title">OUR COLLECTIONS</h2>
+  <div class="collections-nav">
+    <span class="nav-item" [class.active]="activeTab === 'BEST SELLERS'" (click)="onTabClick('BEST SELLERS')">BEST SELLERS</span>
+    <span class="nav-item" [class.active]="activeTab === 'NEW PRODUCTS'" (click)="onTabClick('NEW PRODUCTS')">NEW ARRIVALS</span>
+  </div>
+  <div class="collections-carousel">
+    <div class="collections-grid" #collectionsScroll>
+      @for (product of displayedCollections; track product) {
+        <div class="product-cards">
+          <app-product-card [collection]="product"></app-product-card>
+        </div>
+      }
+    </div>
+  </div>
+  <a routerLink="/products" class="view-all-link">View all</a>
+</section>
+

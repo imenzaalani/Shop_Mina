@@ -1,30 +1,72 @@
-<nav class="bg-white shadow-sm">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
-      <div class="flex items-center">
-        <button 
-          (click)="toggleSidebar()" 
-          class="text-gray-500 hover:text-gray-700 focus:outline-none"
-          aria-label="Toggle sidebar"
-        >
-          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-      <div class="flex items-center">
-        <div class="ml-4 flex items-center md:ml-6">
-          <!-- User profile dropdown -->
-          <div class="ml-3 relative">
-            <div class="flex items-center">
-              <span class="text-gray-700 mr-2">Admin User</span>
-              <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
-                <span class="text-gray-600">AU</span>
-              </div>
-            </div>
-          </div>
+<div class="navbar-admin" [ngClass]="{'collapsed': isCollapsed}">
+    <div class="navbar-header">
+        <div class="logo" routerLink="/">
+            <img src="assets/ShopMinaDark.png" alt="Admin ecommerce" class="logo-img">
         </div>
-      </div>
+        @if (!isCollapsed) {
+          <div class="header-icons">
+              <i class="fas fa-chevron-left" (click)="toggleCollapse()"></i>
+          </div>
+        }
     </div>
-  </div>
-</nav>
+    @if (isCollapsed) {
+      <i class="fas fa-chevron-right navbar-expand-arrow" (click)="toggleCollapse()"></i>
+    }
+    <div class="sidebar">
+        <ul>
+            <li>
+                <a [routerLink]="'/dashboard'" [attr.data-tooltip]="isCollapsed ? 'Dashboard' : null">
+                    <i class="fas fa-home"></i>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+            </li>
+            <li class="has-dropdown" [ngClass]="{'active': showProductsDropdown}">
+                <a href="#" (click)="toggleProductsDropdown(); $event.preventDefault()" [attr.data-tooltip]="isCollapsed ? 'Products' : null">
+                    <i class="fas fa-box"></i> <span>Products</span> <i class="fas fa-chevron-down arrow"></i>
+                </a>
+                @if (showProductsDropdown && !isCollapsed) {
+                  <ul class="dropdown-menu">
+                      <li><a [routerLink]="'/dashboard/add-product'">Add Product</a></li>
+                      <li><a [routerLink]="'/dashboard/all-products'">All Products</a></li>
+                  </ul>
+                }
+            </li>
+            <li class="has-dropdown" [ngClass]="{'active': showOrdersDropdown}">
+                <a href="#" (click)="toggleOrdersDropdown(); $event.preventDefault()" [attr.data-tooltip]="isCollapsed ? 'Orders' : null">
+                    <i class="fas fa-shopping-cart"></i> <span>Orders</span> <i class="fas fa-chevron-down arrow"></i>
+                </a>
+                @if (showOrdersDropdown && !isCollapsed) {
+                  <ul class="dropdown-menu">
+                      <li><a [routerLink]="'/dashboard/all-orders'">All Orders</a></li>
+                      <li><a [routerLink]="'/dashboard/abandoned-carts'">Abandoned Carts</a></li>
+                  </ul>
+                }
+            </li>
+            <li>
+                <a [routerLink]="'/dashboard/all-users'" [attr.data-tooltip]="isCollapsed ? 'Customers' : null"><i class="fas fa-users"></i> <span>Customers</span></a>
+            </li>
+            <li>
+                <a [routerLink]="'/dashboard'" [attr.data-tooltip]="isCollapsed ? 'Reviews' : null"><i class="fas fa-star"></i> <span>Reviews</span></a>
+            </li>
+            <li>
+                <a [routerLink]="'/dashboard'" [attr.data-tooltip]="isCollapsed ? 'Transactions' : null"><i class="fas fa-exchange-alt"></i> <span>Transactions</span></a>
+            </li>
+        </ul>
+        <hr class="sidebar-divider" />
+        <ul>
+            <li>
+                <a [routerLink]="'/dashboard'" class="settings-link" [attr.data-tooltip]="isCollapsed ? 'Settings' : null"><i class="fas fa-cog"></i> <span>Settings</span></a>
+            </li>
+        </ul>
+        <div class="sidebar-bottom-fixed">
+            <ul>
+                <li>
+                    <a [routerLink]="'/dashboard'" class="help-link" [attr.data-tooltip]="isCollapsed ? 'Help' : null"><i class="fas fa-question-circle"></i> <span>Help</span></a>
+                </li>
+                <li>
+                    <a [routerLink]="'/dashboard'" class="logout-link" [attr.data-tooltip]="isCollapsed ? 'Logout Account' : null"><i class="fas fa-sign-out-alt"></i> <span>Logout Account</span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

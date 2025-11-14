@@ -1,0 +1,432 @@
+/* General Header Container */
+.header-container {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f8f8f8; /* White background as per user request */
+  padding: 10px 40px;
+  border-bottom: none; /* No bottom border */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease; /* Smooth transition for background */
+}
+
+.header-container.dark-header {
+  background-color: black;
+}
+
+/* Main Header Section */
+.main-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0; /* Add padding for spacing */
+}
+
+/* Logo Section */
+.logo-section {
+  text-align: left;
+  flex-grow: 0; /* Don't let it grow */
+}
+
+.logo-section .logo {
+  height: 40px; /* Adjust logo size as needed */
+  width: auto;
+}
+
+/* Navigation Bar Styles */
+.navigation-bar {
+  flex-grow: 1; /* Allow navigation to take available space */
+  text-align: center;
+  padding: 0; /* Remove padding from previous navigation bar */
+}
+
+.navigation-bar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Space between navigation items */
+}
+
+.navigation-bar ul li a {
+  color: black; /* Black text for navigation links */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 5px 0;
+  display: flex; /* Use flex to align text and icon */
+  align-items: center;
+  gap: 5px; /* Space between text and icon */
+  position: relative;
+  background-color: transparent; /* Ensure background stays transparent */
+  transition: color 0.3s ease; /* Smooth transition for text color */
+}
+
+.header-container.dark-header .navigation-bar ul li a {
+  color: white;
+}
+
+.navigation-bar ul li .fa-chevron-down {
+  font-size: 10px;
+  position: relative;
+  top: 0;
+  transition: transform 0.3s ease; /* Add smooth transition for arrow */
+}
+
+.dropdown:hover .fa-chevron-down {
+  transform: rotate(180deg); /* Rotate arrow on hover */
+}
+
+.navigation-bar ul li .fa-fire {
+  color: orange; /* Color for the fire icon */
+  font-size: 16px;
+}
+
+/* User, Search, and Actions Section (Right) */
+.user-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between search and icons */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: white; /* White background for search bar */
+  border: 1px solid black; /* Black border */
+  border-radius: 20px; /* Rounded corners */
+  padding: 8px 15px;
+  transition: all 0.3s ease; /* Smooth transition for search container */
+}
+
+.header-container.dark-header .search-container {
+  background-color: white;
+  border-color: white;
+}
+
+.search-container input {
+  width: 150px; /* Adjusted width */
+  padding: 0;
+  border: none !important;
+  background: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: black !important; /* Black text color */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  caret-color: black !important;
+  margin-right: 10px; /* Space between input and icon */
+  transition: color 0.3s ease; /* Smooth transition for input text */
+}
+
+.header-container.dark-header .search-container input {
+  color: black !important;
+  caret-color: black !important;
+}
+
+.search-container input::placeholder {
+  color: #555 !important; /* Darker placeholder color */
+  opacity: 1 !important;
+  transition: color 0.3s ease; /* Smooth transition for placeholder */
+}
+
+.header-container.dark-header .search-container input::placeholder {
+  color: #555 !important; /* Placeholder remains dark */
+}
+
+.user-search-actions .search-icon {
+  color: black !important; /* Search icon remains black */
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.user-search-actions .icon:not(.search-icon) {
+  color: black; /* Black icon color */
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease; /* Smooth transition for other icons */
+}
+
+.header-container.dark-header .user-search-actions .icon:not(.search-icon) {
+  color: white;
+}
+
+.user-search-actions .wishlist-icon {
+  position: relative;
+}
+
+.user-search-actions .wishlist-icon sup {
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: orange; /* Green background for cart count */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+}
+
+.user-search-actions .cart-icon {
+  position: relative;
+}
+
+.user-search-actions .cart-icon sup {
+  font-size: 10px;
+  position: absolute;
+  top: -5px;
+  right: -8px;
+  background-color: limegreen; /* Green background for cart count */
+  color: white;
+  border-radius: 50%;
+  padding: 2px 5px;
+}
+
+/* Remove old header styles (already done, but keeping the comment for clarity) */
+.top-bar,
+.bottom-navigation,
+.shop-name-section,
+.shop-name-left,
+.shop-name-center,
+.shop-name-right,
+.best-offers,
+.menu-section {
+  display: none; /* Hide old sections, including menu-section */
+}
+
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+}
+
+.dropdown:hover .menu-dropdown {
+  display: flex;
+}
+
+.menu-dropdown {
+  display: none;
+  position: fixed;
+  top: 7.8%; /* Increased to account for header height */
+  left: 0;
+  right: 0;
+  background-color: black;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  border-top: 1px solid #333;
+  border-bottom: 1px solid #333;
+}
+
+.menu-dropdown-content {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 30px 40px;
+  justify-content: space-around;
+  box-sizing: border-box;
+}
+
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 200px;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.menu-column h3 {
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: white;
+  font-size: 1em;
+  white-space: nowrap;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #333;
+}
+
+.menu-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.menu-column ul li {
+  display: block;
+  padding: 6px 10px;
+  cursor: pointer;
+  color: black; /* Default black text for list items */
+  font-size: 14px;
+  line-height: 1.4;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.menu-column ul li a {
+  color: black; /* Default black text for links inside list items */
+  text-decoration: none;
+  text-align: left;
+  width: 100%;
+  display: block;
+}
+
+.menu-column ul li:hover {
+  background-color: white;
+  transform: translateX(5px);
+}
+
+.menu-column ul li:hover a {
+  color: black !important; /* Text remains black on hover */
+}
+
+.header-container.dark-header .menu-column ul li:hover a {
+  color: black !important; /* Text remains black on hover even when header is dark */
+}
+
+.narrow-dropdown {
+  width: auto; /* Override full width */
+  left: unset; /* Remove fixed left position */
+  right: unset; /* Remove fixed right position */
+  position: absolute; /* Position relative to its parent .dropdown */
+  top: 100%; /* Position it right below the dropdown link */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.narrow-dropdown .menu-dropdown-content {
+  flex-direction: column;
+  padding: 15px 20px;
+  align-items: flex-start;
+  max-width: none;
+  width: auto;
+  margin: 0;
+}
+
+.narrow-dropdown .menu-column {
+  max-width: none;
+  padding: 0;
+  flex: none;
+}
+
+.narrow-dropdown .menu-column h3 {
+  margin-bottom: 10px;
+  padding-bottom: 3px;
+}
+
+.narrow-dropdown .menu-column ul li {
+  padding: 4px 0;
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 18px;
+}
+.user-dropdown .user-greeting {
+  cursor: pointer;
+  font-weight: 500;
+  color: #7278fb;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-dropdown .menu-dropdown,
+.user-dropdown .menu-dropdown-content {
+  min-width: 220px;
+  max-width: 260px;
+  background: #fff !important;
+  color: #222;
+}
+
+.user-dropdown .menu-dropdown-content {
+  padding: 0 0 8px 0;
+}
+
+.user-dropdown .menu-column h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #444;
+  margin: 10px 18px 8px 18px;
+  letter-spacing: 0.01em;
+}
+
+.user-dropdown .menu-column ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.user-dropdown .menu-column ul li {
+  margin: 0;
+  padding: 0;
+}
+
+.user-dropdown .menu-column ul li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #222;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 10px 18px;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+}
+
+.user-dropdown .menu-column ul li a:hover {
+  background: #f5f5f5;
+  color: #5a31f4;
+}
+
+.user-dropdown .menu-column ul li:not(:last-child) a {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.user-dropdown .menu-column ul li a i {
+  font-size: 1.1rem;
+  color: #888;
+  transition: color 0.18s;
+}
+
+.user-dropdown .menu-column ul li a:hover i {
+  color: #5a31f4;
+}
+
+.search-container.icon-only {
+  width: 40px;
+  justify-content: center;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.search-container.icon-only .search-icon {
+  font-size: 1.3rem;
+}
+
+.dark-header .search-icon,
+.dark-header .icon-only .search-icon {
+  color: #fff !important;
+}
+
+.user-dropdown .menu-column {
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+}
+
+
+
+

@@ -1,0 +1,119 @@
+.info-bar-container {
+  background-color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-top: 1px solid #eee;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto 50px auto;
+  gap: 20px; /* Space between blocks */
+}
+
+.info-block {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  flex: 1 1 200px; /* Allows blocks to grow/shrink but maintain min width */
+  max-width: 280px; /* Max width for each block */
+  justify-content: center; /* Center content within the flex item */
+}
+
+.info-block i {
+  font-size: 2.2em;
+  color: #333;
+  margin-right: 15px;
+}
+
+.text-content h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 5px 0;
+  font-family: Arial, sans-serif;
+}
+
+.text-content p {
+  font-size: 0.9em;
+  color: #666;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.bottom-section {
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+.signup-message {
+  font-size: 1.8em;
+  font-weight: 500;
+  color: #333;
+  font-family: Arial, sans-serif;
+  margin: 0;
+}
+
+.signup-message span {
+  font-weight: 700;
+}
+
+.signup-message u {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .top-section {
+    justify-content: center;
+    gap: 30px;
+  }
+  .info-block {
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .info-bar-container {
+    padding: 30px 15px;
+  }
+  .top-section {
+    margin-bottom: 30px;
+  }
+  .info-block {
+    flex: 1 1 180px;
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+  .info-block i {
+    font-size: 2em;
+    margin-right: 10px;
+  }
+  .text-content h3 {
+    font-size: 1em;
+  }
+  .text-content p {
+    font-size: 0.85em;
+  }
+  .signup-message {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 480px) {
+  .info-block {
+    flex-direction: column;
+    text-align: center;
+  }
+  .info-block i {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .signup-message {
+    font-size: 1.2em;
+  }
+}

@@ -1,1 +1,112 @@
-<p>get-all-orders works!</p>
+<div class="product-card">
+  <div class="top-bar">
+    <h1 class="product-title">All Orders</h1>
+    <!-- Optionally, add a button for creating orders if needed -->
+  </div>
+  <hr class="top-divider" />
+  <div class="search-card">
+    <label class="search-label">Search orders</label>
+    <input class="search-input" type="text" placeholder="Search by user, order ID..." [(ngModel)]="filterText" />
+    <select class="search-select" [(ngModel)]="selectedStatusDropdown">
+      <option value="">All Status</option>
+      <option value="pending">Pending</option>
+      <option value="paid">Paid</option>
+      <option value="shipped">Shipped</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+    <button class="search-btn" (click)="applyFilter()">Search</button>
+  </div>
+  <div class="status-bar">
+    <span (click)="setStatusBar('')" [class.active-status]="!selectedStatusBar">All ({{ statusCounts.all || 0 }})</span>
+    <span (click)="setStatusBar('pending')" [class.active-status]="selectedStatusBar === 'pending'">Pending ({{ statusCounts.pending || 0 }})</span>
+    <span (click)="setStatusBar('paid')" [class.active-status]="selectedStatusBar === 'paid'">Paid ({{ statusCounts.paid || 0 }})</span>
+    <span (click)="setStatusBar('shipped')" [class.active-status]="selectedStatusBar === 'shipped'">Shipped ({{ statusCounts.shipped || 0 }})</span>
+    <span (click)="setStatusBar('cancelled')" [class.active-status]="selectedStatusBar === 'cancelled'">Cancelled ({{ statusCounts.cancelled || 0 }})</span>
+  </div>
+  <div class="table-responsive">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Payment</th>
+          <th>Fulfillment Status</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of paginatedOrders">
+          <td>#{{ order._id?.slice(-6) }}</td>
+          <td>{{ getUserName(order) }}</td>
+          <td>{{ getUserEmail(order) }}</td>
+          <td>
+            <button class="view-variants-btn" *ngIf="order.items.length" (click)="openItemsModal(order)">
+              <i class="fas fa-list"></i> {{ order.items.length }}
+            </button>
+            <span *ngIf="!order.items.length">-</span>
+          </td>
+          <td>{{ order.total | number:'1.2-2' }} {{ order.payment?.currency || 'TND' }} </td>
+          <td>
+            <span class="status-badge status-{{ order.payment?.status | lowercase }}">
+              {{ order.payment?.status || '-' }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge status-{{ order.fulfillmentStatus | lowercase}}">
+              {{ order.fulfillmentStatus || '-' }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge status-{{ order.status | lowercase }}">
+              {{ order.status | titlecase }}
+            </span>
+          </td>
+          <td>{{ order.createdAt | date:'mediumDate' }}</td>
+          <td class="actions-cell">
+            <button (click)="preview(order)" title="Preview"><i class="fas fa-eye"></i></button>
+            <button (click)="delete(order)" title="Delete"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+    <ng-container *ngFor="let page of [].constructor(totalPages); let idx = index">
+      <button 
+        (click)="goToPage(idx + 1)"
+        [class.active-page]="currentPage === (idx + 1)">
+        {{ idx + 1 }}
+      </button>
+    </ng-container>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+<!-- Modal for viewing order items -->
+<div class="modal-backdrop" *ngIf="showItemsModal" (click)="closeItemsModal()"></div>
+<div class="items-modal" *ngIf="showItemsModal">
+  <button class="close-btn" (click)="closeItemsModal()">×</button>
+  <h3>Items for Order {{ selectedOrder?._id }}</h3>
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>Color</th>
+        <th>Size</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of selectedOrder?.items">
+        <td>{{ item.selectedColor }}</td>
+        <td>{{ item.selectedSize }}</td>
+        <td>{{ item.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

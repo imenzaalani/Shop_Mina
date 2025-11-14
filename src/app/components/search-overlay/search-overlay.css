@@ -1,0 +1,153 @@
+.search-overlay-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh; /* Takes full viewport height */
+  z-index: 10000;
+  display: flex;
+  flex-direction: column; /* Stack top bar and backdrop vertically */
+  opacity: 0; /* Start hidden for fade-in */
+  visibility: hidden; /* Hide until open to prevent interactions */
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-overlay-container.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-top-bar {
+  width: 100%;
+  height: 220px;
+  background-color: rgb(0, 0, 0); /* Changed to semi-transparent black */
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transform: translateY(-100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-overlay-container.open .search-top-bar {
+  transform: translateY(0);
+}
+
+.search-backdrop {
+  flex-grow: 1; /* Takes remaining height */
+  background-color: rgba(0, 0, 0, 0.537);
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.search-overlay-container.open .search-backdrop {
+  opacity: 1;
+  transition-delay: 0.2s; /* Slight delay for a staggered effect */
+}
+
+.search-overlay-content {
+  width: 90%;
+  max-width: 620px; /* Adjust max-width slightly wider to match the image */
+  text-align: center;
+}
+
+.search-input-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 35px;
+  padding: 18px 30px;
+  margin-bottom: 20px;
+  width: 90%;
+  max-width: 800px;
+  background-color: rgba(255, 255, 255, 0.1); /* Changed to semi-transparent white */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.search-overlay-container.open .search-input-container {
+  transform: translateY(0);
+  opacity: 1;
+  transition-delay: 0.2s; /* Slight delay for a staggered effect */
+}
+
+.search-input-container:focus-within {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  background-color: rgba(255, 255, 255, 0.15); /* Slightly lighter when focused */
+}
+
+.search-input-container input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  font-size: 1.3em;
+  padding: 0;
+  margin-right: 15px;
+  color: white; /* Changed to white */
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  background: transparent; /* Make input background transparent */
+}
+
+.search-input-container input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important; /* Lighter placeholder color */
+  font-weight: 400;
+}
+
+.search-input-container .search-icon {
+  font-size: 1.5em;
+  color: rgba(255, 255, 255, 0.7); /* Changed to white with opacity */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.search-input-container .search-icon:hover {
+  color: white;
+}
+
+.popular-searches {
+  margin-top: 5px;
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  letter-spacing: 0.5px;
+}
+
+.popular-searches span {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-right: 0;
+  text-transform: uppercase;
+  font-size: 0.9em;
+  letter-spacing: 1px;
+}
+
+.popular-searches a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  margin: 0;
+  cursor: pointer;
+  padding: 5px 12px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.popular-searches a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.close-btn {
+  display: none; /* Ensure the close button is hidden */
+}

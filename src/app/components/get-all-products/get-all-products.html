@@ -1,1 +1,224 @@
-<p>get-all-products works!</p>
+<div class="product-card">
+  <div class="top-bar">
+  <h1 class="product-title">All Products</h1>
+    <button class="add-product-btn" [routerLink]="'/dashboard/add-product'">Add Product</button>
+  </div>
+  <hr class="top-divider" />
+  <div class="search-card">
+    <label class="search-label">What are you looking for?</label>
+    <input class="search-input" type="text" placeholder="Search for name, category etc..." [(ngModel)]="filterText" />
+    <select class="search-select" [(ngModel)]="selectedCategory">
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of uniqueCategories" [value]="cat">{{ cat }}</option>
+    </select>
+    <select class="search-select" [(ngModel)]="selectedStatusDropdown">
+      <option value="">All Status</option>
+      <option value="published">Published</option>
+      <option value="draft">Draft</option>
+      <option value="archived">Archived</option>
+      <option value="scheduled">Scheduled</option>
+    </select>
+    <button class="search-btn" (click)="applyFilter()">Search</button>
+  </div>
+  <div class="status-bar">
+    <span (click)="setStatusBar('')" [class.active-status]="!selectedStatusBar">All ({{ statusCounts.all }})</span>
+    <span (click)="setStatusBar('published')" [class.active-status]="selectedStatusBar === 'published'">Published ({{ statusCounts.published }})</span>
+    <span (click)="setStatusBar('draft')" [class.active-status]="selectedStatusBar === 'draft'">Drafts ({{ statusCounts.draft }})</span>
+    <span (click)="setStatusBar('archived')" [class.active-status]="selectedStatusBar === 'archived'">Archived ({{ statusCounts.archived }})</span>
+    <span (click)="setStatusBar('scheduled')" [class.active-status]="selectedStatusBar === 'scheduled'">Scheduled ({{ statusCounts.scheduled }})</span>
+    <span (click)="setStatusBar('onDiscount')" [class.active-status]="selectedStatusBar === 'onDiscount'">On discount ({{ statusCounts.onDiscount }})</span>
+  </div>
+  <div class="table-responsive">
+    <table class="products-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Images</th>
+          <th>Variants</th>
+          <th (click)="sortBy('name')" class="sortable">Name
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'name' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'name' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('category')" class="sortable">Category
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'category' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'category' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('gender')" class="sortable">Gender
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'gender' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'gender' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('type')" class="sortable">Type
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'type' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'type' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('status')" class="sortable">Status
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'status' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'status' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('regularPrice')" class="sortable">Price
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'regularPrice' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'regularPrice' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('stockStatus')" class="sortable">Stock Status
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'stockStatus' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'stockStatus' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('stock')" class="sortable">Stock
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'stock' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'stock' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th (click)="sortBy('schedule')" class="sortable">Schedule
+            <span class="sort-arrows-vertical">
+              <svg width="14" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="8,4 12,8 4,8" [attr.fill]="(sortField === 'schedule' && sortDirection === 'asc') ? '#42a5f5' : '#b0bec5'" />
+                <polygon points="8,14 12,10 4,10" [attr.fill]="(sortField === 'schedule' && sortDirection === 'desc') ? '#42a5f5' : '#b0bec5'" />
+              </svg>
+            </span>
+          </th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of paginatedProducts; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <ng-container *ngIf="product.images && product.images.length">
+              <button class="view-images-btn" (click)="openImageModal(product.images)">
+                <i class="fas fa-images"></i>
+              </button>
+            </ng-container>
+          </td>
+          <td>
+            <button *ngIf="product.variants?.length" class="view-variants-btn" (click)="openVariantsModal(product)">
+              <i class="fas fa-list"></i> {{ product.variants?.length || 0 }}
+            </button>
+            <span *ngIf="!(product.variants && product.variants.length > 0)">-</span>
+          </td>
+          <td class="name-cell">
+            <span class="name-text" 
+                  [class.expanded]="product._id && expandedNames[product._id]"
+                  (click)="product._id && toggleNameExpansion(product._id)"
+                  [title]="product._id && !expandedNames[product._id] ? 'Click to expand' : 'Click to collapse'">
+              {{ (product._id && expandedNames[product._id]) ? product.name : (product.name | slice:0:30) + (product.name.length > 30 ? '...' : '') }}
+            </span>
+          </td>
+          <td>{{ product.category | titlecase  }}</td>
+          <td>{{ product.gender | titlecase }}</td>
+          <td>{{ product.type | titlecase }}</td>
+          <td [ngClass]="{'draft': product.status === 'draft', 'published': product.status === 'published', 'archived': product.status === 'archived'}">
+            {{ product.status | titlecase }}
+          </td>
+
+          <td>
+            <span *ngIf="product.salePrice">
+              <s>{{ product.regularPrice }}</s> {{ product.salePrice }}
+            </span>
+            <span *ngIf="!product.salePrice">
+              {{ product.regularPrice }}
+            </span>
+          </td>
+          <td [ngClass]="{'in-stock': product.stockStatus === 'In Stock', 'out-of-stock': product.stockStatus === 'Out of Stock'}">
+            <span class="stock-status">
+              {{ product.stockStatus }}
+            </span>
+          </td>
+          <td>{{ getTotalStock(product) }}</td>
+          <td>
+            <span *ngIf="product.status === 'scheduled'">
+              📅 {{ (product.schedule || product.date) | date:'mediumDate' }}
+            </span>
+            <span *ngIf="product.status !== 'scheduled'">-</span>
+          </td>
+          <td class="actions-cell">
+            <button (click)="edit(product)" title="Edit"><i class="fas fa-edit"></i></button>
+            <button (click)="preview(product)" title="Preview"><i class="fas fa-eye"></i></button>
+            <button (click)="delete(product)" title="Delete"><i class="fas fa-trash"></i></button>
+            <button *ngIf="product.status === 'draft'" (click)="publish(product)" title="Publish"><i class="fas fa-upload"></i></button>
+            <button *ngIf="product.status === 'published'" (click)="archive(product)" title="Archive"><i class="fas fa-archive"></i></button>
+            <button *ngIf="product.status === 'archived'" (click)="publish(product)" title="Publish"><i class="fas fa-upload"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Prev</button>
+    <ng-container *ngFor="let page of [].constructor(totalPages); let idx = index">
+      <button 
+        (click)="goToPage(idx + 1)"
+        [class.active-page]="currentPage === (idx + 1)">
+        {{ idx + 1 }}
+      </button>
+    </ng-container>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+<!-- Modal for viewing images -->
+<div class="modal-backdrop" *ngIf="showModal" (click)="closeModal()"></div>
+<div class="image-modal" *ngIf="showModal">
+  <button class="close-btn" (click)="closeModal()">×</button>
+  <div class="modal-images">
+    <img *ngFor="let img of selectedImages" [src]="getImageUrl(img)" class="modal-image" />
+  </div>
+</div>
+
+<!-- Modal for viewing variants -->
+<div class="modal-backdrop" *ngIf="showVariantsModal" (click)="closeVariantsModal()"></div>
+<div class="variants-modal" *ngIf="showVariantsModal">
+  <button class="close-btn" (click)="closeVariantsModal()">×</button>
+  <h3>Variants for {{ selectedProduct?.name }}</h3>
+  <table class="variants-table">
+    <thead>
+      <tr>
+        <th>Size</th>
+        <th>Color</th>
+        <th>Stock</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let variant of selectedProduct?.variants">
+        <td>{{ variant.size }}</td>
+        <td>{{ variant.color }}</td>
+        <td>{{ variant.stock }}</td>
+        <td>
+          <img *ngIf="variant.image" [src]="getImageUrl(variant.image)" class="variant-thumb" />
+          <span *ngIf="!variant.image">-</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

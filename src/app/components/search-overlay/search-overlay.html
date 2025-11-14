@@ -1,1 +1,15 @@
-<p>search-overlay works!</p>
+<div class="search-overlay-container" [class.open]="isOpen">
+  <div class="search-top-bar" (click)="$event.stopPropagation()">
+    <div class="search-input-container">
+      <input #searchInput type="text" placeholder="Search products">
+      <i class="fas fa-search search-icon"></i>
+    </div>
+    <div class="popular-searches">
+      <span>Popular Searches:</span>
+      <a href="#">T-Shirt</a>
+      <a href="#">Blue</a>
+      <a href="#">Jacket</a>
+    </div>
+  </div>
+  <div class="search-backdrop" (click)="closeSearchOverlay()"></div>
+</div>

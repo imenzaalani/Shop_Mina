@@ -1,0 +1,44 @@
+.user-card {
+  background: #121215;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 32px;
+  margin: 32px auto;
+  max-width: 1200px;
+}
+
+.user-title {
+    font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 10px 0px 30px 0px;
+  padding-bottom: 10px;
+  text-align: left;
+  border-bottom: 2px solid #404041;
+  letter-spacing: 3px; 
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #18191b;
+  color: #e0e0e0;
+}
+.users-table th, .users-table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #23272f;
+  text-align: left;
+}
+.users-table th {
+  background: #23243a;
+  color: #b3b8ff;
+  font-weight: 500;
+  border-bottom: 2px solid #23272f;
+  letter-spacing: 0.5px;
+}
+.users-table tr:hover {
+  background: #23243a;
+}

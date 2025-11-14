@@ -1,1 +1,13 @@
-<p>breadcrumbs works!</p>
+<!-- Breadcrumbs -->
+<div class="breadcrumbs">
+  @for (item of items; track item; let last = $last) {
+    @if (item.link && !last) {
+      <a [routerLink]="item.link">{{item.label}}</a>
+    } @else {
+      <span>{{item.label}}</span>
+    }
+    @if (!last) {
+      <span> &gt; </span>
+    }
+  }
+</div>

@@ -1,1 +1,15 @@
-<p>categories works!</p>
+<div class="categories-section">
+  <h1 class="categories-heading">Categories</h1>
+  <div class="categories-carousel">
+    <button class="carousel-arrow left-arrow" (click)="scroll('left')">&#10094;</button>
+    <div class="categories-grid" #categoriesScroll>
+      @for (category of categories; track category.label) {
+        <div class="category-card" (click)="onCardClick(category.label)">
+          <img [src]="category.image" [alt]="category.alt">
+          <div class="category-label">{{ category.label }}</div>
+        </div>
+      }
+    </div>
+    <button class="carousel-arrow right-arrow" (click)="scroll('right')">&#10095;</button>
+  </div>
+</div>

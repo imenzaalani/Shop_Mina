@@ -1,1 +1,46 @@
-<p>shopping-cart-overlay works!</p>
+<div class="cart-backdrop" [class.hidden]="!isVisible" (click)="onClose()"></div>
+<div class="shopping-cart-overlay" [class.hidden]="!isVisible">
+  <div class="cart-header">
+    <h2>Shopping Cart</h2>
+    <button class="close-button" (click)="onClose()">&times;</button>
+  </div>
+  
+  @if (cartItems$ | async; as cartItems) {
+    @if (cartItems.length > 0) {
+      <div class="cart-items">
+        @for (item of cartItems; track item; let i = $index) {
+          <div class="cart-item">
+            <div class="item-image">
+              <img [src]="item.product.images[0] || item.product.imageUrl" [alt]="item.product.name">
+            </div>
+            <div class="item-details">
+              <h3>{{item.product.name}}</h3>
+              <p class="price">${{(item.product.salePrice || item.product.regularPrice || item.product.currentPrice) | number:'1.2-2'}}</p>
+              <p class="variant">Size: {{item.selectedSize}}, Color: {{item.selectedColor}}</p>
+              <div class="quantity-controls">
+                <button class="quantity-btn" (click)="item.quantity > 1 ? item.quantity = item.quantity - 1 : null">-</button>
+                <span class="quantity">{{item.quantity}}</span>
+                <button class="quantity-btn" (click)="item.quantity = item.quantity + 1">+</button>
+              </div>
+            </div>
+            <button class="remove-item" (click)="removeItem(i)">&times;</button>
+          </div>
+        }
+      </div>
+
+      <div class="cart-footer">
+        <div class="subtotal">
+          <span>Subtotal:</span>
+          <span class="amount">${{getSubtotal(cartItems) | number:'1.2-2'}}</span>
+        </div>
+        <button class="checkout-button" routerLink="/checkouts">Checkout</button>
+        <button class="view-cart-button" routerLink="/cart">View Cart</button>
+      </div>
+    } @else {
+      <div class="empty-cart-message">
+        <div class="empty-cart-icon"></div>
+        <p>Your cart is empty</p>
+      </div>
+    }
+  }
+</div>

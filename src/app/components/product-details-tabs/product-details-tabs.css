@@ -1,0 +1,29 @@
+.product-tabs {
+    margin-top: 50px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.tab-header {
+    display: flex;
+}
+
+.tab-item {
+    padding: 15px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-item.active {
+    color: black;
+    border-color: black;
+}
+
+.tab-content {
+    padding: 20px 0;
+    color: #333;
+    line-height: 1.6;
+}

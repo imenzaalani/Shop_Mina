@@ -1,0 +1,14 @@
+.breadcrumbs {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.breadcrumbs span {
+    margin-right: 5px;
+}
+
+.breadcrumbs span:not(:last-child)::after {
+    content: ">";
+    margin-left: 5px;
+}

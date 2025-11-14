@@ -1,1 +1,32 @@
-<p>product-card works!</p>
+<ng-container *ngIf="collection">
+<div class="product-card" (click)="onCardClick($event)">
+  <div class="product-image-container" [class.has-hover-image]="collection.images && collection.images.length > 1">
+    <span class="discount-badge" *ngIf="collection.discount">-{{collection.discount}}%</span>
+    <img [src]="collection.imageUrl" [alt]="collection.name" class="product-image main-image">
+    <img *ngIf="collection.images && collection.images.length > 1" [src]="collection.images[1]"
+      [alt]="collection.name + ' alternate'" class="product-image hover-image">
+    <div class="product-actions">
+      <div class="action-icon-wrapper" [class.active]="isWishlisted">
+        <div class="action-label" [class.active]="isWishlisted">
+          {{ isWishlisted ? 'Remove from wishlist' : 'Add to wishlist' }}
+        </div>
+        <div class="action-icon" [class.active]="isWishlisted">
+          <i [ngClass]="isWishlisted ? 'fas fa-star wishlist-icon' : 'far fa-star wishlist-icon'" (click)="addToWishlist($event)"></i>
+        </div>
+      </div>
+      <div class="action-icon-wrapper">
+        <div class="action-label">Quick view</div>
+        <div class="action-icon"><i class="fa fa-eye quick-view-icon" (click)="openQuickView($event)"></i></div>
+      </div>
+    </div>
+    <button class="select-options-btn">Select options</button>
+  </div>
+  <div class="product-details">
+    <a href="#" class="product-name">{{collection.name}}</a>
+    <div class="product-price">
+      <span class="current-price">${{collection.currentPrice | number:'1.2-2'}}</span>
+      <span class="old-price" *ngIf="collection.oldPrice">${{collection.oldPrice | number:'1.2-2'}}</span>
+    </div>
+  </div>
+</div>
+</ng-container>

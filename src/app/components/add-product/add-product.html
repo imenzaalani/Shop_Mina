@@ -1,1 +1,228 @@
-<p>add-product works!</p>
+<!-- Success Popup -->
+@if (successMessage) {
+  <div class="success-popup">
+    <div class="success-popup-content">
+      <i class="fas fa-check-circle success-icon"></i>
+      <span class="success-text">{{ successMessage }}</span>
+    </div>
+  </div>
+}
+
+<!-- Publish Confirmation Popup -->
+@if (showPublishModal) {
+  <div class="modal-backdrop" (click)="closePublishModal()"></div>
+  <div class="publish-modal">
+    <div class="publish-modal-content">
+      <div class="publish-modal-header">
+        <h3>Confirm Product Publication</h3>
+        <button class="close-btn" (click)="closePublishModal()">×</button>
+      </div>
+      
+      <div class="publish-modal-body">
+        <div class="confirmation-message">
+          <i class="fas fa-exclamation-triangle warning-icon"></i>
+          <p>Are you sure you want to publish this product? Once published, it will be visible to customers.</p>
+        </div>
+        <div class="publish-info">{{ publishInfo }}</div>
+        <div class="product-preview">
+          <h4>Product Preview</h4>
+          <div class="preview-card">
+            <div class="preview-images">
+              @if (images.length > 0) {
+                <img [src]="images[0].preview" [alt]="form.get('productName')?.value" class="preview-main-image">
+              } @else {
+                <div class="no-image-placeholder">
+                  <i class="fas fa-image"></i>
+                  <span>No images uploaded</span>
+                </div>
+              }
+            </div>
+            <div class="preview-details">
+              <h5 class="preview-name">{{ form.get('productName')?.value || 'Product Name' }}</h5>
+              <p class="preview-description">{{ form.get('description')?.value || 'Product description will appear here...' }}</p>
+              <div class="preview-price">
+                <span class="current-price">
+                  ${{ form.get('salePrice')?.value || form.get('regularPrice')?.value || '0.00' }}
+                </span>
+                @if (form.get('salePrice')?.value) {
+                  <span class="old-price">
+                    ${{ form.get('regularPrice')?.value }}
+                  </span>
+                }
+              </div>
+              <div class="preview-meta">
+                <span class="preview-category">{{ form.get('category')?.value || 'Category' }}</span>
+                <span class="preview-gender">{{ form.get('gender')?.value || 'Gender' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        @if (variants.length > 0) {
+          <div class="variants-preview">
+            <h4>Variants</h4>
+            @for (variant of variants; track variant) {
+              <div class="variant-preview-row">
+                <span class="variant-preview-size">{{ variant.size }}</span>
+                <span class="variant-preview-color">{{ variant.color }}</span>
+                <span class="variant-preview-stock">Stock: {{ variant.stock }}</span>
+                @if (variant.imagePreview) {
+                  <span class="variant-preview-image">
+                    <img [src]="variant.imagePreview" [alt]="variant.size + ' ' + variant.color" />
+                  </span>
+                }
+              </div>
+            }
+          </div>
+        }
+      </div>
+      
+      <div class="publish-modal-footer">
+        <button type="button" class="btn-cancel" (click)="closePublishModal()">Cancel</button>
+        <button type="button" class="btn-confirm" (click)="confirmPublish()">Confirm Publish</button>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Main Card -->
+<form [formGroup]="form" class="product-card" (ngSubmit)="onSubmit()">
+  <h1 class="product-title">Add Product</h1>
+  <div class="product-grid">
+    <div class="product-left">
+      <label class="image-upload-label">Add Images</label>
+      <!-- Image Upload Section -->
+      <div class="image-upload-container">
+        <label class="image-upload-dropzone" (dragover)="$event.preventDefault()" (drop)="onDrop($event)">
+          <div class="image-upload-icon">
+            <i class="fas fa-image"></i>
+          </div>
+          <div class="image-upload-text">
+            <span>Drop your files here, or <span class="browse-link" (click)="maxImagesError ? null : triggerFileInput()">Browse</span></span>
+            @if (showFileInput) {
+              <input #fileInput type="file" multiple (change)="onFileSelected($event)" style="display:none" />
+            }
+          </div>
+        </label>
+        <div class="image-upload-list">
+          @for (img of images; track img; let i = $index) {
+            <div class="image-upload-item">
+              @if (img.preview) {
+                <img [src]="img.preview" class="image-thumb" />
+              }
+              <div class="image-info">
+                <div class="image-name">{{ img.name }}</div>
+                <div class="image-size">{{ img.size | number }} KB</div>
+                @if (img.progress < 100) {
+                  <div class="image-progress">
+                    <div class="progress-bar" [style.width.%]="img.progress"></div>
+                    <span class="progress-text">{{ img.progress }}% done</span>
+                  </div>
+                }
+              </div>
+              <button type="button" class="delete-btn" (click)="removeImage(i)">
+                <i class="fas fa-trash"></i>
+              </button>
+              @if (img.progress < 100) {
+                <button type="button" class="cancel-btn" (click)="cancelUpload(i)">Cancel</button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+      
+      <!-- Variants Section -->
+      <div class="form-group">
+        <label>Product Variants</label>
+        <div class="variants-section">
+          <div class="variants-header">
+            <span>Size | Color | Stock</span>
+            <button type="button" class="btn-add-variant" (click)="addVariant()">
+              <i class="fas fa-plus"></i> Add Variant
+            </button>
+          </div>
+          
+          @if (variants.length > 0) {
+            <div class="variants-table">
+              @for (variant of variants; track variant; let i = $index) {
+                <div class="variant-row">
+                  <div class="variant-cell">
+                    <select #sizeSelect [value]="variant.size" (change)="updateVariant(i, 'size', sizeSelect.value)">
+                      @for (size of getVariantSizeOptions(); track size) {
+                        <option [value]="size">{{size}}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="variant-cell">
+                    <select #colorSelect [value]="variant.color" (change)="updateVariant(i, 'color', colorSelect.value)">
+                      @for (color of colorOptions; track color) {
+                        <option [value]="color">{{color}}</option>
+                      }
+                    </select>
+                  </div>
+                  <div class="variant-cell">
+                    <input #stockInput type="number" [value]="variant.stock" min="0" (change)="updateVariant(i, 'stock', +stockInput.value)" />
+                  </div>
+                  <div class="variant-cell variant-image">
+                    <div class="variant-image-upload">
+                      <input #variantImageInput type="file" 
+                             [id]="'variant-image-' + variant.id" 
+                             accept="image/*" 
+                             (change)="onVariantImageSelected($event, i)" 
+                             style="display: none;" />
+                      @if (variant.imagePreview) {
+                        <div class="variant-image-preview">
+                          <img [src]="variant.imagePreview" [alt]="variant.size + ' ' + variant.color" />
+                        </div>
+                        <button type="button" 
+                                class="remove-variant-image" 
+                                (click)="removeVariantImage(i)">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      } @else {
+                        <button type="button" 
+                                class="btn-upload-variant-image" 
+                                (click)="variantImageInput.click()">
+                          <i class="fas fa-image"></i>
+                        </button>
+                      }
+                    </div>
+                  </div>
+                  <div class="variant-cell">
+                    <button type="button" class="btn-remove-variant" (click)="removeVariant(i)">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+          
+          @if (variants.length > 0) {
+            <div class="variants-summary">
+              <span>Total Stock: {{ getTotalStock() }}</span>
+            </div>
+          }
+          
+          @if (variants.length === 0) {
+            <div class="no-variants">
+              <p>No variants added yet. Click "Add Variant" to get started.</p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+    
+    <div class="product-right">
+      <div class="form-group">
+        <label>Product Name</label>
+        <input type="text" formControlName="productName" />
+        @if (form.get('productName')?.touched && form.get('productName')?.invalid) {
+          <div class="error">Product name is required.</div>
+        }
+      </div>
+      
+      <!-- Add other form groups with similar pattern -->
+      
+    </div>
+  </div>
+</form>

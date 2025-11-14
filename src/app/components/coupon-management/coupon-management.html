@@ -1,1 +1,67 @@
-<p>coupon-management works!</p>
+<div class="coupon-management">
+  <!-- Success Popup -->
+  @if (showPopup) {
+    <div class="success-popup">
+      <div class="success-popup-content">
+        <span class="success-icon">✓</span>
+        <span class="success-text">{{ popupMessage }}</span>
+      </div>
+    </div>
+  }
+  
+  <h2>Coupon Management</h2>
+  <form [formGroup]="couponForm" (ngSubmit)="submitCoupon()" class="coupon-form">
+    @if (errorMsg) {
+      <div class="error-msg">{{ errorMsg }}</div>
+    }
+    @if (successMsg) {
+      <div class="success-msg">{{ successMsg }}</div>
+    }
+    <label>Code <input formControlName="code" /></label>
+    <label>Type
+      <select formControlName="type">
+        <option value="percentage">Percentage</option>
+        <option value="fixed">Fixed</option>
+      </select>
+    </label>
+    <label>Value <input type="number" formControlName="value" /></label>
+    <label>Min Order Amount <input type="number" formControlName="minOrderAmount" /></label>
+    <label>Max Uses <input type="number" formControlName="maxUses" /></label>
+    <label>Valid From <input type="date" formControlName="validFrom" /></label>
+    <label>Valid To <input type="date" formControlName="validTo" /></label>
+    <label>Active <input type="checkbox" formControlName="active" /></label>
+    <div class="form-actions">
+      <button type="submit">{{ editingCoupon ? 'Update' : 'Add' }} Coupon</button>
+      @if (editingCoupon) {
+        <button type="button" (click)="cancelEdit()">Cancel</button>
+      }
+    </div>
+  </form>
+  <h3>All Coupons</h3>
+  <table class="coupon-table">
+    <thead>
+      <tr>
+        <th>Code</th><th>Type</th><th>Value</th><th>Min</th><th>Max</th><th>Used</th><th>Valid From</th><th>Valid To</th><th>Active</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (c of coupons; track c) {
+        <tr>
+          <td>{{ c.code }}</td>
+          <td>{{ c.type }}</td>
+          <td>{{ c.value }}</td>
+          <td>{{ c.minOrderAmount || '-' }}</td>
+          <td>{{ c.maxUses || '-' }}</td>
+          <td>{{ c.usedCount || 0 }}</td>
+          <td>{{ c.validFrom | date:'yyyy-MM-dd' }}</td>
+          <td>{{ c.validTo | date:'yyyy-MM-dd' }}</td>
+          <td>{{ c.active ? 'Yes' : 'No' }}</td>
+          <td>
+            <button (click)="editCoupon(c)">Edit</button>
+            <button (click)="deleteCoupon(c)">Delete</button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

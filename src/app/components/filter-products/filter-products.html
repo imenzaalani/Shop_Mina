@@ -1,1 +1,79 @@
-<p>filter-products works!</p>
+<div class="filter-backdrop" [class.hidden]="!isVisible" (click)="onClose()"></div>
+<div class="filter-overlay" [class.hidden]="!isVisible">
+  <div class="filter-header">
+    <span>Filter</span>
+    <button class="close-button" (click)="onClose()">&times;</button>
+  </div>
+
+  <div class="filter-content">
+    <div class="filter-group sort-header-row">
+      <span class="sort-label">Sort by</span>
+      <span class="expand-icon">
+        <i class="fas" [ngClass]="expandedSection === 'colour' ? 'fa-minus' : 'fa-plus'"></i>
+      </span>    
+    </div>
+    <div class="sort-options">
+      <button [class.selected]="selectedSort === 'news'" (click)="selectSort('news')">News</button>
+      <button [class.selected]="selectedSort === 'asc'" (click)="selectSort('asc')">Price ascending</button>
+      <button [class.selected]="selectedSort === 'desc'" (click)="selectSort('desc')">Price descending</button>
+    </div>
+    <hr />
+    <div class="filter-group expandable" (click)="toggleSection('colour')">
+      <span>Colour</span>
+      <span class="expand-icon">
+        <i class="fas" [ngClass]="expandedSection === 'colour' ? 'fa-minus' : 'fa-plus'"></i>
+      </span>
+    </div>
+    <div *ngIf="expandedSection === 'colour'" class="filter-options colour-grid">
+      <div
+        class="colour-item"
+        *ngFor="let color of availableColors"
+        [class.selected]="selectedColor === color.color"
+        (click)="selectColor(color.color)">
+        <span class="colour-swatch" [ngClass]="color.color.toLowerCase()"></span>
+        {{ color.color }}
+        <span class="color-count">({{ color.count }})</span>
+      </div>
+    </div>
+    <hr />
+    <div class="filter-group expandable" (click)="toggleSection('waist')">
+      <span>Waist</span>
+      <span class="expand-icon">
+        <i class="fas" [ngClass]="expandedSection === 'waist' ? 'fa-minus' : 'fa-plus'"></i>
+      </span>
+    </div>
+    <div *ngIf="expandedSection === 'waist'" class="filter-options waist-grid">
+      <button class="waist-pill">XS</button>
+      <button class="waist-pill">S</button>
+      <button class="waist-pill">S</button>
+      <button class="waist-pill">M</button>
+      <button class="waist-pill">M</button>
+      <button class="waist-pill">M-L</button>
+      <button class="waist-pill">L</button>
+      <button class="waist-pill">L</button>
+      <button class="waist-pill">XL</button>
+    </div>
+    <hr />
+    <div class="filter-group expandable" (click)="toggleSection('price')">
+      <span>Price</span>
+      <span class="expand-icon">
+        <i class="fas" [ngClass]="expandedSection === 'price' ? 'fa-minus' : 'fa-plus'"></i>
+      </span>
+    </div>
+    <div *ngIf="expandedSection === 'price'" class="filter-options price-grid">
+      <button class="price-pill">Up to €10.00</button>
+      <button class="price-pill">Up to €20.00</button>
+      <button class="price-pill">Up to €30.00</button>
+    </div>
+    <hr />
+    <div class="filter-group discount-row">
+      <span>With discount</span>
+      <input type="checkbox" [(ngModel)]="withDiscount" />
+    </div>
+  </div>
+
+  <div class="filter-footer">
+    <button class="delete-btn">DELETE</button>
+    <button class="view-results-btn">VIEW RESULTS</button>
+  </div>
+</div>

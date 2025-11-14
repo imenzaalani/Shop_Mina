@@ -1,16 +1,24 @@
 import { RouterOutlet } from '@angular/router';
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID, signal } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { isPlatformBrowser, ViewportScroller } from '@angular/common';
+import { isPlatformBrowser, ViewportScroller, CommonModule } from '@angular/common';
+import { Header } from './components/header/header';
+import { Footer } from './components/footer/footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    Header,
+    Footer
+  ],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
   protected readonly title = signal('frontend');
   showHeaderAndFooter: boolean = true;
 

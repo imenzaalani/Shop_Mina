@@ -1,0 +1,288 @@
+.testimonials-section {
+  background: linear-gradient(120deg,  #b3b69ac9 0%, #f2f2f2 50%, #b3b69ac9 100%); /* Darker outside, lighter inside gradient */
+  padding: 120px 0 100px 0; /* Further increased padding */
+  text-align: center;
+  overflow: hidden; /* Hide overflow for carousel */
+}
+
+.testimonials-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3.8rem; /* Further increased font size */
+  font-weight: 900;
+  color: #000; /* Pure black */
+  text-transform: uppercase;
+  margin-bottom: 50px; /* Further increased margin bottom */
+  text-shadow: none; /* Removed text shadow for a cleaner look */
+}
+
+.rating-summary {
+  margin-bottom: 50px;
+}
+
+.excellent-rating {
+  font-size: 2.1rem; /* Further increased font size */
+  font-weight: 800; /* Further increased font weight */
+  color: #1a1a1a; /* Darker grey for better visibility */
+  margin-bottom: 10px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.stars {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.stars i {
+  background-color: #84832c; /* Black background for stars */
+  color: #fff; /* White star icon */
+  width: 30px;
+  height: 30px;
+  margin: 0 4px;
+  border-radius: 0px; /* Ensuring sharp corners */
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.reviews-count {
+  font-size: 1.1em; /* Kept same font size */
+  color: #333; /* Darker grey */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.reviews-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 60px; /* Increased space for arrows */
+}
+
+.reviews-grid {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* For Firefox */
+  -webkit-overflow-scrolling: touch;
+  gap: 40px; /* Increased space between cards */
+  padding-bottom: 20px; /* For potential scrollbar or shadow */
+  max-width: 100%;
+  /* Add mask for fade effect */
+  mask-image: linear-gradient(to right, 
+    rgba(0,0,0,0) 0%, 
+    rgba(0,0,0,1) 5%, 
+    rgba(0,0,0,1) 95%, 
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-image: linear-gradient(to right, 
+    rgba(0,0,0,0) 0%, 
+    rgba(0,0,0,1) 5%, 
+    rgba(0,0,0,1) 95%, 
+    rgba(0,0,0,0) 100%
+  );
+}
+
+.reviews-grid::-webkit-scrollbar {
+  display: none; 
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  color: #333;
+  cursor: pointer;
+  box-shadow: 0 0 3px rgba(0,0,0,0.05); /* Extremely subtle default shadow */
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.carousel-arrow.left-arrow { left: 0; margin-left: 10px; }
+.carousel-arrow.right-arrow { right: 0; margin-right: 10px; }
+
+.carousel-arrow:hover {
+  background: #84832c;
+  color: #fff;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1); 
+  transform: translateY(-50%) scale(1.05);
+}
+
+.review-card {
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  background-color: #fff; /* Solid white background for cards */
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.03); /* Almost imperceptible shadow */
+  padding: 40px;
+  width: 360px;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  background-image: none; /* Remove gradient */
+  background-position: initial; /* Reset */
+  transition: initial; /* Reset */
+}
+
+.review-card:first-child {
+  background-position: initial; /* Ensure first child does not have special gradient position */
+}
+
+.card-header {
+  margin-bottom: 20px;
+}
+
+.stars-green {
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.stars-green i {
+  background-color: #84832c; /* Black background for stars */
+  color: #fff; /* White star icon */
+  width: 25px;
+  height: 25px;
+  margin-right: 4px;
+  border-radius: 0px; /* Ensuring sharp corners */
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0; 
+}
+
+.review-card h4 {
+  font-size: 1.4em; /* Slightly increased font size */
+  font-weight: 800; /* Bolder font weight */
+  color: #000; 
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.review-text {
+  font-size: 1em; /* Kept same font size */
+  color: #222; /* Even darker grey for better visibility */
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.reviewer-name {
+  font-size: 1em; /* Kept same font size */
+  font-weight: 700; /* Kept same font weight */
+  color: #000; /* Pure black for maximum visibility */
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .testimonials-title {
+    font-size: 2.5rem;
+  }
+  .reviews-carousel {
+    padding: 0 20px;
+  }
+  .carousel-arrow {
+    width: 45px;
+    height: 45px;
+    font-size: 1.6rem;
+  }
+  .review-card {
+    width: 300px;
+    padding: 25px;
+  }
+}
+
+@media (max-width: 992px) {
+  .testimonials-section {
+    padding: 60px 0 40px 0;
+  }
+  .testimonials-title {
+    font-size: 2.2rem;
+    margin-bottom: 25px;
+  }
+  .excellent-rating {
+    font-size: 1.6rem;
+  }
+  .reviews-carousel {
+    padding: 0 10px;
+  }
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+  }
+  .reviews-grid {
+    gap: 20px;
+  }
+  .review-card {
+    width: 280px;
+    min-height: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .reviews-carousel {
+    padding: 0;
+  }
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    margin: 0 5px;
+  }
+  .reviews-grid {
+    padding: 0 15px 20px;
+  }
+  .review-card {
+    width: 260px;
+    min-height: 240px;
+    padding: 20px;
+  }
+  .review-card h4 {
+    font-size: 1.2em;
+  }
+  .review-text {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 576px) {
+  .testimonials-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  .excellent-rating {
+    font-size: 1.4rem;
+  }
+  .reviews-grid {
+    padding: 0 10px 15px;
+  }
+  .review-card {
+    width: 240px;
+    min-height: 220px;
+    padding: 15px;
+  }
+  .review-card h4 {
+    font-size: 1.1em;
+  }
+  .review-text {
+    font-size: 0.85em;
+  }
+  .reviewer-name {
+    font-size: 0.8em;
+  }
+}

@@ -1,1 +1,91 @@
-<p>product-details-info works!</p>
+<div class="product-details-main-section">
+  <div class="image-gallery">
+    <div class="main-image">
+      <img [src]="allGalleryImages[currentImageIndex]" [alt]="product.name">
+      <div class="nav-arrows">
+        <span class="arrow left" (click)="prevImage()">&#10094;</span>
+        <span class="arrow right" (click)="nextImage()">&#10095;</span>
+      </div>
+    </div>
+    <div class="thumbnail-images">
+      <img *ngFor="let img of allGalleryImages; let i = index"
+           [src]="img"
+           [alt]="product.name + ' thumbnail'"
+           [class.selected]="i === currentImageIndex"
+           (click)="selectImage(i)">
+    </div>
+  </div>
+
+  <div class="product-info">
+    <h1>{{product.name}}</h1>
+    <div class="price">
+      <ng-container *ngIf="product.salePrice; else regularOnly">
+        <span class="sale-price">${{product.salePrice | number:'1.2-2'}}</span>
+        <span class="regular-price">${{product.regularPrice | number:'1.2-2'}}</span>
+      </ng-container>
+      <ng-template #regularOnly>
+        <span class="sale-price">${{product.regularPrice | number:'1.2-2'}} </span>
+      </ng-template>
+    </div>
+    
+    <div class="options-group" *ngIf="availableColors.length > 0">
+      <label>Color: <b>{{selectedColor}}</b></label>
+      <div class="color-options">
+        <ng-container *ngIf="availableColors">
+          <span *ngFor="let color of availableColors"
+                class="color-circle"
+                [ngClass]="[getColorClass(color), selectedColor === color ? 'selected' : '']"
+                (click)="selectColor(color)"></span>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="options-group" *ngIf="availableSizes.length > 0">
+      <label>Size: <b>{{selectedSize}}</b></label>
+      <div class="size-options">
+        <ng-container *ngIf="availableSizes">
+          <span *ngFor="let size of availableSizes"
+                class="size-box"
+                [class.selected]="size === selectedSize"
+                [class.out-of-stock]="!isVariantInStock(getVariantId(selectedColor, size))"
+                (click)="selectSize(size)">{{size}}
+                <span *ngIf="!isVariantInStock(getVariantId(selectedColor, size))" class="stock-label">Out of Stock</span>
+                <span *ngIf="isVariantInStock(getVariantId(selectedColor, size))" class="stock-label">({{getVariantStock(getVariantId(selectedColor, size))}} left)</span>
+          </span>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="quantity-selector" *ngIf="isCurrentSelectionInStock()">
+      <button class="quantity-btn" (click)="decrementQuantity()">-</button>
+      <input type="text" [value]="quantity" (input)="onQuantityInput($event)" class="quantity-input" [max]="getCurrentStock()">
+      <button class="quantity-btn" (click)="incrementQuantity()">+</button>
+    </div>
+    
+    <div class="stock-warning" *ngIf="!isCurrentSelectionInStock()">
+      <p class="out-of-stock-message">This item is currently out of stock</p>
+    </div>
+    
+    <button class="add-to-cart-btn" 
+            [disabled]="!isCurrentSelectionInStock() || quantity > getCurrentStock()"
+            (click)="addToCart()">
+      {{ isCurrentSelectionInStock() ? 'Add to cart' : 'Out of Stock' }}
+    </button>
+
+    <div class="action-links">
+      <a href="#"><i class="fas fa-question-circle"></i> Ask a question</a>
+      <a href="#"><i class="fas fa-share-alt"></i> Share</a>
+    </div>
+
+    <div class="product-meta">
+      <p *ngIf="product.type"><b>Type:</b> {{formatDisplayText(product.type)}}</p>
+      <p *ngIf="product.category"><b>Category:</b> {{formatDisplayText(product.category)}}</p>
+      <p><b>Availability:</b>
+        <span [ngClass]="getAvailabilityStatus() === 'Out of Stock' ? 'out-of-stock' : 'in-stock'">
+          {{getAvailabilityStatus()}}
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+<app-shopping-cart-overlay *ngIf="showCartOverlay" (close)="showCartOverlay = false"></app-shopping-cart-overlay>

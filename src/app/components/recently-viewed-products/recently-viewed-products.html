@@ -1,1 +1,34 @@
-<p>recently-viewed-products works!</p>
+<div class="recently-viewed-products">
+  <h2>{{ title }}</h2>
+  
+  @if (isLoading) {
+    <!-- Loading State -->
+    <div class="loading-state">
+      <p>Loading recommendations...</p>
+    </div>
+  } @else if (error) {
+    <!-- Error State -->
+    <div class="error-state">
+      <p class="error-message">{{ error }}</p>
+      <button (click)="loadRecommendations()" class="retry-button">Retry</button>
+    </div>
+  } @else {
+    @if (products.length > 0) {
+      <!-- Products Grid -->
+      <div class="product-cards-container">
+        @for (product of products; track product) {
+          <app-product-card 
+            [collection]="mapToCollection(product)"
+            (cardClick)="onProductClick(product, $event)"
+            class="product-card"
+          ></app-product-card>
+        }
+      </div>
+    } @else {
+      <!-- Empty State -->
+      <div class="empty-state">
+        <p>No recommendations available at the moment.</p>
+      </div>
+    }
+  }
+</div>

@@ -1,1 +1,188 @@
-<p>header works!</p>
+<div class="header-container" [ngClass]="{'dark-header': isDropdownOpen}">
+  <!-- Main Header Section -->
+  <div class="main-header-section">
+    <div class="logo-section">
+      <a routerLink="/">
+        <img [src]="isDropdownOpen ? 'assets/ShopMinaDark.png' : 'assets/ShopMina.png'" alt="Shop Mina Logo"
+          class="logo">
+      </a>
+    </div>
+
+    <nav class="navigation-bar">
+      <ul>
+        <li><a [routerLink]="['/']" [queryParams]="{ tab: 'new-arrivals' }" [fragment]="'collections-section'">NEW ARRIVALS</a></li>
+        <li><a routerLink="/products">ALL PRODUCTS</a></li>
+        <li class="dropdown" (mouseenter)="onDropdownEnter()" (mouseleave)="onDropdownLeave()">
+          <a [routerLink]="['/products']" [queryParams]="{ gender: 'men' }">MENS <i class="fas fa-chevron-down"></i></a>
+          <div class="menu-dropdown" [class.isDropdownOpen]="isDropdownOpen">
+            <div class="menu-dropdown-content">
+              <div class="menu-column">
+                <h3>Tops + T-Shirts</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', category: 'tops' }">All Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'graphic-tees' }">Graphic Tees</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'casual-shirts' }">Casual Shirts</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'work-shirts' }">Work Shirts</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Sweaters + Hoodies</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', category: 'sweaters' }">All Sweaters</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'hoodies' }">Hoodies</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'long-sleeves' }">Long Sleeves</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'sweaters' }">Sweaters + Cardigans</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Bottoms</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', category: 'bottoms' }">All Bottoms</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'skirts' }">Skirts</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'jeans' }">Jeans</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'pants' }">Trousers</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Outerwears</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', category: 'outerwears' }">All Outerwears</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'jackets' }">Jackets</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'coats' }">Coats</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Shoes</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', category: 'shoes' }">All Shoes</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'cowboy-boots' }">Cowboy Boots</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'sandals' }">Sandals</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'boots' }">Boots</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'men', type: 'sneakers' }">Sneakers</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="dropdown" (mouseenter)="onDropdownEnter()" (mouseleave)="onDropdownLeave()">
+          <a [routerLink]="['/products']" [queryParams]="{ gender: 'women' }">WOMENS <i class="fas fa-chevron-down"></i></a>
+          <div class="menu-dropdown" [class.isDropdownOpen]="isDropdownOpen">
+            <div class="menu-dropdown-content">
+              <div class="menu-column">
+                <h3>Tops + T-Shirts</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'tops' }">All Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'graphic-tops' }">Graphic Tees</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'tube-tops' }">Tube Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'mesh-tops' }">Mesh Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'long-sleeves' }">Long Sleeve Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'corset-tops' }">Corset Tops</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'crop-tops' }">Crop Tops</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Sweaters + Hoodies</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'sweatears' }">All Sweaters</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'hoodies' }">Hoodies</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'long-sleeves' }">Long Sleeves</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'sweaters' }">Sweaters + Cardigans</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Bottoms</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'bottoms' }">All Bottoms</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'skirts' }">Skirts</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'jeans' }">Jeans</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'pants' }">Trousers</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Outerwear</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'outerwears' }">All Outerwear</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'jackets' }">Jackets</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'coats' }">Coats</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Dresses + 2in1</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'dresses' }">All Dresses</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'midi-dresses' }">Midi Dresses</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'maxi-dresses' }">Maxi Dresses</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'bodycon-dresses' }">Bodycon Dresses</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'two-piece-sets' }">Two-Piece Sets</a></li>
+                </ul>
+              </div>
+              <div class="menu-column">
+                <h3>Shoes</h3>
+                <ul>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', category: 'shoes' }">All Shoes</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'cowboy-boots' }">Cowboy Boots</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'sandals' }">Sandals</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'boots' }">Boots</a></li>
+                  <li><a [routerLink]="['/products']" [queryParams]="{ gender: 'women', type: 'sneakers' }">Sneakers</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a [routerLink]="['/products']" [queryParams]="{ category: 'accessories' }">ACCESSORIES</a></li>
+        <li><a href="#">SALE <i class="fas fa-fire"></i></a></li>
+      </ul>
+    </nav>
+
+    <div class="user-search-actions">
+      <div *ngIf="!isLoggedIn()" class="search-container" (click)="openSearchOverlay()">
+        <input type="text" placeholder="Search products" readonly>
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <ng-container *ngIf="isLoggedIn(); else guestLinks">
+        <div class="dropdown user-dropdown" (mouseenter)="onUserDropdownEnter()" (mouseleave)="onUserDropdownLeave()">
+          <span class="user-greeting">Welcome, {{ firstName }} {{ lastName }} <i class="fas fa-chevron-down"></i></span>
+          <div class="menu-dropdown narrow-dropdown" [class.isDropdownOpen]="isUserDropdownOpen">
+            <div class="menu-dropdown-content">
+              <div class="menu-column">
+                <h3>Account</h3>
+                <ul>
+                  <li><a routerLink="/profile"><i class="fas fa-user-circle"></i> Profile</a></li>
+                  <li><a routerLink="/settings"><i class="fas fa-cog"></i> Settings</a></li>
+                  <li><a (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #guestLinks>
+        <a routerLink="/login"><i class="fas fa-user icon"></i></a>
+      </ng-template>
+
+      <div *ngIf="isLoggedIn()" class="icon-only" (click)="openSearchOverlay()">
+        <i class="fas fa-search search-icon"></i>
+      </div>
+
+      <div class="wishlist-icon">
+        <a routerLink="/wishlist">
+          <i class="far fa-star icon"><sup>{{ wishlistCount }}</sup></i>
+        </a>
+      </div>
+      
+      <div class="cart-icon" (click)="toggleCartOverlay()">
+        <i class="fas fa-shopping-bag icon"><sup>{{ cartCount }}</sup></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+@if (showSearchOverlay) {
+  <app-search-overlay (close)="showSearchOverlay = false"></app-search-overlay>
+}
+
+@if (showCartOverlay) {
+  <app-shopping-cart-overlay (close)="showCartOverlay = false"></app-shopping-cart-overlay>
+}

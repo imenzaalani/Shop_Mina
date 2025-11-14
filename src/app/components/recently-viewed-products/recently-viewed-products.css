@@ -1,0 +1,124 @@
+.recently-viewed-products {
+  padding: 40px 0;
+  margin: 0;
+  background-color: #fff;
+}
+
+.recently-viewed-products h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  position: relative;
+  padding-bottom: 15px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.recently-viewed-products h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 2px;
+  background-color: #000;
+}
+
+.product-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 0 20px 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.loading-state,
+.empty-state,
+.error-state {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 16px;
+  color: #666;
+  grid-column: 1 / -1;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.error-message {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.retry-button {
+  background-color: #000;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Product card overrides */
+.product-cards-container app-product-card {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .product-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 25px;
+    padding: 0 15px 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recently-viewed-products {
+    padding: 30px 0;
+  }
+  
+  .recently-viewed-products h2 {
+    font-size: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .product-cards-container {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .product-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 0 10px 30px;
+  }
+  
+  .recently-viewed-products h2 {
+    font-size: 18px;
+    padding: 0 10px 15px;
+  }
+  
+  .loading-state,
+  .empty-state,
+  .error-state {
+    padding: 30px 10px;
+  }
+}
