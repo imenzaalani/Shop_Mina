@@ -1,0 +1,54 @@
+<div class="products-container">
+    <div class="product-grid-section">
+        <div class="product-grid-header">
+            <button class="open-filter-button" (click)="toggleFilterOverlay()">Open Filters</button>
+
+            <div class="in-stock-toggle">
+              <span>In stock only</span>
+              <label class="switch">
+                <input type="checkbox" [checked]="showInStockOnly" (change)="toggleInStockOnly()">
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <div class="sort-options">
+                <span>Sort by:</span>
+                <div class="selected-sort-display" (click)="toggleSortDropdown()">
+                    <span>{{selectedSortOption}}</span>
+                    <i class="fas fa-chevron-down" [class.rotated]="showSortDropdown"></i>
+                </div>
+                @if (showSortDropdown) {
+                  <ul class="sort-dropdown">
+                      @for (option of sortOptions; track option) {
+                        <li (click)="selectSortOption(option)"
+                            [class.selected]="option === selectedSortOption">
+                            {{option}}
+                        </li>
+                      }
+                  </ul>
+                }
+            </div>
+            
+        </div>
+
+        <!-- Filter tags section -->
+        <div class="filter-tags-section">
+          @if (showInStockOnly) {
+            <div class="filter-tag">
+              <span>In stock</span>
+              <button class="remove-tag-btn" (click)="toggleInStockOnly()">&times;</button>
+            </div>
+          }
+        </div>
+
+        <div class="product-cards">
+            @for (product of mappedProducts; track product) {
+              <app-product-card [collection]="product"></app-product-card>
+            }
+        </div>
+    </div>
+</div>
+
+@if (showFilterOverlay) {
+  <app-filter-products (close)="showFilterOverlay = false"></app-filter-products>
+}

@@ -1,0 +1,68 @@
+<div class="shopping-cart-page">
+  <h1 class="page-title">Shopping Cart</h1>
+  <div class="breadcrumbs">
+    <a routerLink="/">Home</a> > <span>Your Shopping Cart</span>
+  </div>
+
+  <div class="cart-content">
+    <div class="cart-items-section">
+      <div class="cart-table-header">
+        <div class="header-product">Product</div>
+        <div class="header-price">Price</div>
+        <div class="header-quantity">Quantity</div>
+        <div class="header-total">Total</div>
+      </div>
+      <hr class="table-header-divider">
+
+      @if (cartItems$ | async; as cartItems) {
+        @if (cartItems.length > 0) {
+          @for (item of cartItems; track item; let i = $index) {
+            <div class="cart-item-row">
+              <div class="item-product">
+                <img [src]="item.product.images[0] || item.product.imageUrl" [alt]="item.product.name" class="item-image">
+                <div class="item-details">
+                  <p class="item-name">{{item.product.name}}</p>
+                  <p class="item-variant">Size: {{item.selectedSize}}</p>
+                  <p class="item-variant">Color: {{item.selectedColor}}</p>
+                  <button class="remove-item-btn" (click)="removeItem(i)">Remove</button>
+                </div>
+              </div>
+              <div class="item-price">
+                ${{(item.product.salePrice || item.product.regularPrice || item.product.currentPrice) | number:'1.2-2'}}
+              </div>
+              <div class="item-quantity">
+                <div class="quantity-controls">
+                  <button class="quantity-btn" (click)="item.quantity > 1 ? item.quantity = item.quantity - 1 : null">-</button>
+                  <span class="quantity-display">{{item.quantity}}</span>
+                  <button class="quantity-btn" (click)="item.quantity = item.quantity + 1">+</button>
+                </div>
+              </div>
+              <div class="item-total">
+                ${{((item.product.salePrice || item.product.regularPrice || item.product.currentPrice) * item.quantity) | number:'1.2-2'}}
+              </div>
+            </div>
+            @if ($index < cartItems.length - 1) {
+              <hr class="item-divider">
+            }
+          }
+        } @else {
+          <div class="empty-cart-message">Your cart is empty.</div>
+        }
+      }
+    </div>
+
+    <div class="cart-summary-section">
+      @if (cartItems$ | async; as cartItems) {
+        <div class="subtotal-line">
+          <span>Subtotal</span>
+          <span class="subtotal-amount">${{getSubtotal(cartItems) | number:'1.2-2'}}</span>
+        </div>
+        <p class="shipping-info">Taxes and shipping calculated at checkout</p>
+        <button class="checkout-btn primary-checkout" [disabled]="cartItems.length === 0" routerLink="/checkouts">CHECK OUT</button>
+        <button class="checkout-btn shop-pay-btn" [disabled]="cartItems.length === 0">Shop Pay</button>
+        <button class="checkout-btn paypal-btn" [disabled]="cartItems.length === 0">PayPal</button>
+        <button class="checkout-btn g-pay-btn" [disabled]="cartItems.length === 0">G Pay</button>
+      }
+    </div>
+  </div>
+</div>

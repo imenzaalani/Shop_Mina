@@ -1,0 +1,328 @@
+.product-detail-page {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    font-family: Arial, sans-serif;
+}
+
+.breadcrumbs {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.breadcrumbs span {
+    margin-right: 5px;
+}
+
+.breadcrumbs span:not(:last-child)::after {
+    content: ">";
+    margin-left: 5px;
+}
+
+.main-product-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 50px;
+}
+
+.image-gallery {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.main-image {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* For a square image container */
+    overflow: hidden;
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+}
+
+.main-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-arrows {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    padding: 0 10px;
+}
+
+.nav-arrows .arrow {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #333;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.thumbnail-images {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 10px; /* For scrollbar space */
+}
+
+.thumbnail-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.thumbnail-images img.selected {
+    border-color: black;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-info h1 {
+    font-size: 2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.product-info .price {
+    font-size: 1.8em;
+    color: #008000; /* Green color for price */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+.options-group {
+    margin-bottom: 20px;
+}
+
+.options-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.color-options,
+.size-options {
+    display: flex;
+    gap: 10px;
+}
+
+.color-circle {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.color-circle.black {
+    background-color: black;
+}
+
+.color-circle.blue {
+    background-color: #007bff;
+}
+
+.color-circle.selected {
+    border: 2px solid black;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+}
+
+.size-box {
+    border: 1px solid #ccc;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.size-box.selected {
+    background-color: black;
+    color: white;
+    border-color: black;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    width: fit-content;
+    margin-bottom: 20px;
+}
+
+.quantity-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.quantity-input {
+    border: none;
+    text-align: center;
+    width: 40px;
+    font-size: 1em;
+}
+
+/* Hide arrows for Chrome, Safari, Edge */
+.quantity-input::-webkit-outer-spin-button,
+.quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.add-to-cart-btn {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 25px;
+    transition: background-color 0.2s ease;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #333;
+}
+
+.action-links {
+    margin-bottom: 25px;
+}
+
+.action-links a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 20px;
+    font-size: 0.95em;
+}
+
+.action-links a i {
+    margin-right: 5px;
+}
+
+.product-meta {
+    font-size: 0.9em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.product-meta b {
+    color: #333;
+}
+
+.product-meta .in-stock {
+    color: green;
+    font-weight: bold;
+}
+
+.emoji {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; /* Ensure emojis render */
+}
+
+.product-tabs {
+    margin-top: 50px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 30px;
+}
+
+.tab-header {
+    display: flex;
+}
+
+.tab-item {
+    padding: 15px 25px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: border-color 0.3s ease, color 0.3s ease;
+}
+
+.tab-item.active {
+    color: black;
+    border-color: black;
+}
+
+.tab-content {
+    padding: 20px 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+.recently-viewed-products {
+    margin-top: 50px;
+}
+
+.recently-viewed-products h2 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 30px;
+}
+
+.product-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+.breadcrumbs-bar {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: #222;
+    margin: 18px 0 28px 0;
+    font-family: 'Inter', Arial, sans-serif;
+}
+
+.breadcrumb-link {
+    color: #222;
+    text-decoration: none;
+    margin: 0 6px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+    color: #7278fb;
+}
+
+.breadcrumb-separator {
+    color: #bbb;
+    margin: 0 4px;
+    font-size: 1.1em;
+}
+
+.breadcrumb-current {
+    color: #222;
+    font-weight: 500;
+    margin-left: 6px;
+}

@@ -1,0 +1,30 @@
+<nav class="bg-white shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <div class="flex items-center">
+        <button 
+          (click)="toggleSidebar()" 
+          class="text-gray-500 hover:text-gray-700 focus:outline-none"
+          aria-label="Toggle sidebar"
+        >
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <div class="flex items-center">
+        <div class="ml-4 flex items-center md:ml-6">
+          <!-- User profile dropdown -->
+          <div class="ml-3 relative">
+            <div class="flex items-center">
+              <span class="text-gray-700 mr-2">Admin User</span>
+              <div class="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                <span class="text-gray-600">AU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,12 @@
+<div class="wishlist-container">
+  <h1 class="page-title">Wishlist</h1>
+  <div class="breadcrumbs">
+    <a routerLink="/">Home</a> > <span>Wishlist</span>
+  </div>
+
+  <div class="wishlist-items">
+    @for (product of wishlistProducts; track product) {
+      <app-product-card [collection]="product"></app-product-card>
+    }
+  </div>
+</div>

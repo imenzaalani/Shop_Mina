@@ -1,0 +1,8 @@
+<div class="dashboard-container" [class.collapsed]="isSidebarCollapsed">
+    <div class="dashboard-sidebar">
+        <app-navbar-admin (collapsedChange)="onCollapsedChange($event)"></app-navbar-admin>
+    </div>
+    <div class="dashboard-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>

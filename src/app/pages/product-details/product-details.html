@@ -1,0 +1,25 @@
+<div class="product-detail-page">
+  <!-- Breadcrumbs -->
+  <nav class="breadcrumbs-bar">
+    <span class="breadcrumb-link" routerLink="/">Home</span>
+    <span class="breadcrumb-separator">&#8250;</span>
+    <span class="breadcrumb-link">{{product?.category || 'Category'}}</span>
+    <span class="breadcrumb-separator">&#8250;</span>
+    <span class="breadcrumb-current">{{product?.name}}</span>
+  </nav>
+
+  <!-- Main Product Section -->
+  <div class="main-product-section">
+    @if (product) {
+      <app-product-details-info [product]="product"></app-product-details-info>
+    }
+  </div>
+
+  <!-- Product Description & Shipping Info Tabs -->
+  @if (product) {
+    <app-product-details-tabs [product]="product"></app-product-details-tabs>
+  }
+
+  <!-- Recently Viewed Products Section -->
+  <app-recently-viewed-products></app-recently-viewed-products>
+</div>

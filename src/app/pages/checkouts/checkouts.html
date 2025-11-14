@@ -1,0 +1,238 @@
+@if (successMessage) {
+  <div class="success-popup">
+    <div class="success-popup-content">
+      <i class="fas fa-check-circle success-icon"></i>
+      <span class="success-text">{{ successMessage }}</span>
+    </div>
+  </div>
+}
+
+<div class="checkout-header">
+  <div class="checkout-header-logo" routerLink="/">
+    <img src="assets/ShopMina.png" alt="Logo" class="checkout-logo-img" />
+  </div>
+  <div class="checkout-header-cart" routerLink="/cart">
+    <i class="fas fa-shopping-bag"></i>
+  </div>
+</div>
+
+<div class="checkout-container">
+  <div class="checkout-left">
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+      <!-- Contact -->
+      <div class="checkout-section">
+        <h2>Contact</h2>
+        <input type="email" formControlName="email" placeholder="Email" class="checkout-input" />
+        @if (checkoutForm.get('email')?.invalid && checkoutForm.get('email')?.touched) {
+          <div class="error-msg">
+            Please enter a valid email.
+          </div>
+        }
+        <div class="newsletter-optin">
+          <input type="checkbox" id="newsletter" formControlName="newsletter" />
+          <label for="newsletter">Email me with news and offers</label>
+          @if (!userService.isLoggedIn()) {
+            <a routerLink="/login" class="login-link">Log in</a>
+          } 
+          @else {
+            <span class="logged-in-indicator">
+              <i class="fas fa-check-circle"></i> Logged in as {{ userService.getCurrentUser()?.email }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Delivery -->
+      <div class="checkout-section">
+        <h2>Delivery</h2>
+        <select class="checkout-input" formControlName="country">
+          <option value="Tunisia">Tunisia</option>
+          <option value="USA">USA</option>
+          <option value="France">France</option>
+          <option value="Germany">Germany</option>
+          <option value="UK">UK</option>
+        </select>
+        @if (checkoutForm.get('country')?.invalid && checkoutForm.get('country')?.touched) {
+          <div class="error-msg">
+            Country is required.
+          </div>
+        }
+        <div class="input-row">
+          <div class="input-col">
+            <input type="text" formControlName="firstName" placeholder="First name" class="checkout-input" />
+            @if (checkoutForm.get('firstName')?.invalid && checkoutForm.get('firstName')?.touched) {
+              <div class="error-msg">
+                First name is required.
+              </div>
+            }
+          </div>
+          <div class="input-col">
+            <input type="text" formControlName="lastName" placeholder="Last name" class="checkout-input" />
+            @if (checkoutForm.get('lastName')?.invalid && checkoutForm.get('lastName')?.touched) {
+              <div class="error-msg">
+                Last name is required.
+              </div>
+            }
+          </div>
+        </div>
+        <div class="input-col">
+          <input type="text" formControlName="address" placeholder="Address" class="checkout-input" />
+          @if (checkoutForm.get('address')?.invalid && checkoutForm.get('address')?.touched) {
+            <div class="error-msg">
+              Address is required.
+            </div>
+          }
+        </div>
+        <div class="input-row">
+          <div class="input-col">
+            <input type="text" formControlName="postalCode" placeholder="Postal code (optional)" class="checkout-input" />
+          </div>
+          <div class="input-col">
+            <input type="text" formControlName="city" placeholder="City" class="checkout-input" />
+            @if (checkoutForm.get('city')?.invalid && checkoutForm.get('city')?.touched) {
+              <div class="error-msg">
+                City is required.
+              </div>
+            }
+          </div>
+        </div>
+        <div class="input-col">
+          <input type="text" formControlName="phone" placeholder="Phone" class="checkout-input" />
+          @if (checkoutForm.get('phone')?.invalid && checkoutForm.get('phone')?.touched) {
+            <div class="error-msg">
+              Phone is required.
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Shipping Method -->
+      <div class="checkout-section">
+        <h2>Shipping method</h2>
+        <div class="shipping-method">
+          {{ shippingMethod }}
+          <span class="free">
+            {{ shipping === 0 ? 'FREE' : ('$' + (shipping | number:'1.2-2')) }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Payment -->
+      <div class="checkout-section">
+        <h2>Payment</h2>
+        <label class="payment-radio-row">
+          <input type="radio" formControlName="paymentMethod" value="cash-on-delivery" />
+          <span class="payment-label">Cash on Delivery</span>
+        </label>
+        <label class="payment-radio-row">
+          <input type="radio" formControlName="paymentMethod" value="credit-card" checked />
+          <span class="payment-label">Credit card</span>
+          <span class="card-icons-row">
+            <img src="assets/images/credit-cards.jpg" alt="Credit Cards" class="credit-cards-img" />
+            <span class="card-icons-plus-wrapper">
+              <span class="card-icons-plus">+4</span>
+              <span class="card-icons-tooltip">
+                <img src="assets/images/diners-club.jpg" alt="Diners Club" class="extra-card-icon" />
+                <img src="assets/images/elo.jpg" alt="Elo" class="extra-card-icon" />
+                <img src="assets/images/jcb.jpg" alt="JCB" class="extra-card-icon" />
+                <img src="assets/images/unionpay.png" alt="UnionPay" class="extra-card-icon" />
+              </span>
+            </span>
+          </span>
+        </label>
+        @if (checkoutForm.get('paymentMethod')?.value === 'credit-card') {
+          <div class="credit-card-fields">
+            <div id="card-element"></div>
+            @if (cardError) {
+              <div class="error-msg">
+                {{ cardError }}
+              </div>
+            }
+            <input type="text" formControlName="cardName" placeholder="Name on card" class="checkout-input" />
+            @if (checkoutForm.get('cardName')?.invalid && checkoutForm.get('cardName')?.touched) {
+              <div class="error-msg">
+                Name on card is required.
+              </div>
+            }
+          </div>
+        }
+        <label class="payment-radio-row">
+          <input type="radio" formControlName="paymentMethod" value="paypal" />
+          <span class="payment-label">PayPal</span>
+          <span class="payment-icon-right"><i class="fab fa-cc-paypal"></i> PayPal</span>
+        </label>
+        @if (checkoutForm.get('paymentMethod')?.value === 'paypal') {
+          <div class="paypal-info-box">
+            <div class="paypal-info-content">
+              <span class="paypal-info-text">
+                After clicking <b>"Pay with PayPal"</b>, you will be redirected to PayPal to complete your purchase securely.
+              </span>
+            </div>
+          </div>
+          <div id="paypal-button-container"></div>
+        }
+        @else {
+          <button
+            class="pay-now-btn"
+            type="submit"
+            [disabled]="!checkoutForm.valid || isPaying"
+          >
+            {{ isPaying ? 'Processing...' : 'Pay now' }}
+          </button>
+        }
+      </div>
+    </form>
+  </div>
+
+  <div class="checkout-right">
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      @for (item of cartItems; track item) {
+        <div class="cart-item">
+          <div class="cart-item-img-wrapper">
+            <img [src]="item.product.images[0] || item.product.imageUrl" [alt]="item.product.name" class="cart-item-img" />
+            <span class="cart-item-qty-badge">{{ item.quantity }}</span>
+          </div>
+          <div class="cart-item-info">
+            <div class="cart-item-title">{{ item.product.name }}</div>
+            <div class="cart-item-variant">
+              {{ item.selectedSize ? (item.selectedSize + ' / ') : '' }}{{ item.selectedColor }}
+            </div>
+          </div>
+          <div class="cart-item-price">
+            ${{ (item.product.salePrice || item.product.regularPrice || item.product.currentPrice) | number:'1.2-2' }}
+          </div>
+        </div>
+      }
+      <div class="discount-code-row">
+        <input type="text" placeholder="Discount code" class="discount-input" [(ngModel)]="discountInput" [ngModelOptions]="{standalone: true}" />
+        <button class="apply-discount-btn" (click)="applyDiscount(discountInput)">Apply</button>
+      </div>
+      @if (discountApiError) {
+        <div class="error-msg">{{ discountApiError }}</div>
+      }
+      @if (appliedDiscountCode) {
+        <div class="summary-row">
+          <span>Discount ({{ appliedDiscountCode }})</span>
+          <span>- ${{ discountValue | number:'1.2-2' }}</span>
+        </div>
+      }
+      <div class="summary-row">
+        <span>Subtotal · {{ itemCount }} item{{ itemCount > 1 ? 's' : '' }}</span>
+        <span>${{ subtotal | number:'1.2-2' }}</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        @if (shipping === 0) {
+          <span class="free">FREE</span>
+        } @else {
+          <span class="free">${{ shipping | number:'1.2-2' }}</span>
+        }
+      </div>
+      <div class="summary-row total-row">
+        <span>Total</span>
+        <span class="total-amount"> <b>${{ getTotal() | number:'1.2-2' }}</b></span>
+      </div>
+    </div>
+  </div>
+</div>

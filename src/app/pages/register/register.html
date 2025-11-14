@@ -1,0 +1,79 @@
+<div class="register-page">
+  <div class="register-page-container">
+    <h1 class="main-page-title">Register</h1>
+    <div class="breadcrumbs">
+      <a routerLink="/">Home</a> > <span>Create Account</span>
+    </div>
+
+    <div class="register-section">
+      <h2 class="section-title">Sign up</h2>
+      @if (loginError) {
+        <div class="form-error"><span class="icon">&#9888;</span>{{ loginError }}</div>
+      }
+      
+      <form class="register-form" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <input type="text" placeholder="First Name" class="form-input" formControlName="firstName">
+          @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.invalid) {
+            <div class="error">
+              @if (registerForm.get('firstName')?.errors?.['required']) {
+                <span>Please enter your first name.</span>
+              }
+              @if (registerForm.get('firstName')?.errors?.['minlength']) {
+                <span>First name must be at least 2 characters long.</span>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="form-group">
+          <input type="text" placeholder="Last Name" class="form-input" formControlName="lastName">
+          @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.invalid) {
+            <div class="error">
+              @if (registerForm.get('lastName')?.errors?.['required']) {
+                <span>Please enter your last name.</span>
+              }
+              @if (registerForm.get('lastName')?.errors?.['minlength']) {
+                <span>Last name must be at least 2 characters long.</span>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="form-group">
+          <input type="email" placeholder="Email" class="form-input" formControlName="email">
+          @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+            <div class="error">
+              @if (registerForm.get('email')?.errors?.['required']) {
+                <span>Please enter your email address.</span>
+              }
+              @if (registerForm.get('email')?.errors?.['email']) {
+                <span>Please enter a valid email address (e.g., name&#64;example.com).</span>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="form-group">
+          <input type="password" placeholder="Password" class="form-input" formControlName="password">
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+            <div class="error">
+              @if (registerForm.get('password')?.errors?.['required']) {
+                <span>Please create a password.</span>
+              }
+              @if (registerForm.get('password')?.errors?.['minlength']) {
+                <span>Password must be at least 6 characters long.</span>
+              }
+            </div>
+          }
+        </div>
+        
+        <p class="register-text">
+          Sign up for early Sale access plus tailored new arrivals, trends and promotions. To opt out, click unsubscribe in our emails.
+        </p>
+        <button type="submit" class="register-button">Sign up</button>
+        <button type="button" class="log-in-button" routerLink="/login">Log In</button>
+      </form>
+    </div>
+  </div>
+</div>
