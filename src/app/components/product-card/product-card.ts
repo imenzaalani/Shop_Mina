@@ -45,13 +45,14 @@ export class ProductCard{
     this.isWishlisted = !this.isWishlisted;
   }
 
+  onCardClick(event: Event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.cardClick.emit(event);
+  }
+
   openQuickView(event: Event) {
     event.stopPropagation();
     // Add your quick view logic here
-  }
-
-  onCardClick(event: Event) {
-    event.preventDefault();
-    this.cardClick.emit(event);
   }
 }

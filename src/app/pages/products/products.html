@@ -20,7 +20,7 @@
                 @if (showSortDropdown) {
                   <ul class="sort-dropdown">
                       @for (option of sortOptions; track option) {
-                        <li (click)="selectSortOption(option)"
+                        <li (click)="onSortOptionSelected(option)"
                             [class.selected]="option === selectedSortOption">
                             {{option}}
                         </li>
@@ -43,7 +43,10 @@
 
         <div class="product-cards">
             @for (product of mappedProducts; track product) {
-              <app-product-card [collection]="product"></app-product-card>
+              <app-product-card 
+                [collection]="product"
+                (cardClick)="onProductClick(product, $event)">
+              </app-product-card>
             }
         </div>
     </div>

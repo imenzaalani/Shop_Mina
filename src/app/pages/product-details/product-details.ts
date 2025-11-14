@@ -35,14 +35,22 @@ export class ProductDetails implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.productName = params.get('productName');
       if (this.productName) {
+        // Convert the URL-friendly name back to the original format for comparison
+        const originalName = this.productName.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        
         this.productService.getProducts().subscribe(products => {
-          const found = products.find(p => p.name === this.productName);
+          // Try to find by URL-friendly name first, then by original name
+          const found = products.find(p => 
+            p.name.toLowerCase().replace(/\s+/g, '-') === this.productName ||
+            p.name === originalName
+          );
+          
           if (found) {
             this.product = this.mapProduct(found);
             this.breadcrumbs = [
               { label: 'Home', link: '/' },
               { label: 'Products', link: '/products' },
-              { label: this.product.name }
+              { label: found.name }
             ];
           } else {
             this.product = undefined;

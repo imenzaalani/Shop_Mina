@@ -9,6 +9,7 @@ interface LoginResponse {
   _id: string;
   firstName: string;
   lastName: string;
+  email?: string;
   role: string;
 }
 
@@ -20,13 +21,15 @@ interface LoginResponse {
   styleUrl: './login.css',
 })
 export class Login implements OnInit {
-  loginForm!: FormGroup;
+  loginForm: FormGroup;
   submitted = false;
   loginError: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {}
-
-  ngOnInit(): void {
+  constructor(
+    private fb: FormBuilder, 
+    private userService: UserService, 
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
@@ -34,49 +37,63 @@ export class Login implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+    if (this.userService.isLoggedIn()) {
+      this.router.navigate(['/']);
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
     this.loginError = '';
+
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
       return;
     }
     this.userService.login(this.loginForm.value).subscribe({
-      next: (response: LoginResponse) => {
+      next: (response: any) => {
         if (response && response.token) {
           const user = {
-            _id : response._id,
+            _id: response._id,
             firstName: response.firstName,
             lastName: response.lastName,
-            email: this.loginForm.value.email,
+            email: response.email || this.loginForm.value.email,
             role: response.role
           };
-          if (this.loginForm.value.rememberMe) {
-            localStorage.setItem('token', response.token);
-            sessionStorage.removeItem('token');
-            localStorage.setItem('currentUser', JSON.stringify(user));
-            sessionStorage.removeItem('currentUser');
+
+          const storage = this.loginForm.value.rememberMe ? localStorage : sessionStorage;
+          storage.setItem('token', response.token);
+          storage.setItem('currentUser', JSON.stringify(user));
+
+          // Clear the other storage
+          const otherStorage = this.loginForm.value.rememberMe ? sessionStorage : localStorage;
+          otherStorage.removeItem('token');
+          otherStorage.removeItem('currentUser');
+          if (user.role === 'admin') {
+            this.router.navigate(['/dashboard']);
           } else {
-            sessionStorage.setItem('token', response.token);
-            localStorage.removeItem('token');
-            sessionStorage.setItem('currentUser', JSON.stringify(user));
-            localStorage.removeItem('currentUser');
+            this.router.navigate(['/products']);
           }
-        }
-        // Redirect based on user role
-        if (response.role === 'admin') {
-          this.router.navigate(['/dashboard']);
         } else {
-          this.router.navigate(['/products']);
+          this.loginError = 'Invalid response from server. Please try again.';
         }
       },
       error: (err: any) => {
-        if (err.error && (err.error.error?.toLowerCase().includes('invalid') || err.error.error?.toLowerCase().includes('not found'))) {
+        if (err.status === 401) {
           this.loginError = 'Invalid email or password. Please try again.';
+        } else if (err.status === 0) {
+          this.loginError = 'Unable to connect to the server. Please check your internet connection.';
         } else {
           this.loginError = 'Login failed. Please try again.';
         }
-      }
+      },
+      complete: () => {}
     });
+  }
+
+  // Helper to easily access form controls in the template
+  get f() { 
+    return this.loginForm.controls; 
   }
 }

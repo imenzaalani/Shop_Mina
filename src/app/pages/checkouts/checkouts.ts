@@ -206,8 +206,6 @@ export class Checkouts implements OnInit, AfterViewInit {
         };
         await this.saveOrder(order);
         this.showSuccess('Order placed! You will pay upon delivery.');
-      } else {
-        console.log(this.checkoutForm.value);
       }
       this.isPaying = false;
     } else {

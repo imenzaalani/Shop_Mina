@@ -72,7 +72,6 @@ export class Collections implements OnInit {
 
   onCardClick(productName: string): void {
     // Handle product card click
-    console.log(`Clicked on product: ${productName}`);
   }
 
   onTabClick(tabName: string): void {

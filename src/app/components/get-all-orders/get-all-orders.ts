@@ -28,7 +28,6 @@ export class GetAllOrders implements OnInit {
     this.orderService.getOrders().subscribe({
       next: (data: Order[]) => {
         this.orders = data;
-        console.log('Fetched orders:', this.orders);
         this.applyFilter();
       },
       error: (err: any) => {

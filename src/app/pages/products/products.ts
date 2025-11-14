@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { ProductService, Product } from '../../services/product/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCard } from '../../components/product-card/product-card';
@@ -111,7 +112,6 @@ export class Products implements OnInit {
         // Include if gender matches or product is unisex
         return productGender === genderFilterLower || productGender === 'unisex';
       });
-      console.log('Filtered by gender:', filtered);
     }
     if (this.categoryFilter) {
       // Map URL parameter to database value if needed
@@ -126,15 +126,12 @@ export class Products implements OnInit {
         const productCategory = product.category.toString().toLowerCase();
         return productCategory === categoryFilter;
       });
-      
-      console.log(`Filtered by category (${this.categoryFilter} -> ${categoryFilter}):`, filtered);
     }
     if (this.typeFilter) {
       filtered = filtered.filter(product => 
         product.type && 
         product.type.toString().toLowerCase() === this.typeFilter?.toLowerCase()
       );
-      console.log('Filtered by type:', filtered);
     }
     if (this.showInStockOnly) {
       filtered = filtered.filter(product => this.isProductInStock(product));
@@ -152,7 +149,11 @@ export class Products implements OnInit {
     this.sortMappedProducts();
   }
 
-  constructor(private productService: ProductService, private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
@@ -160,16 +161,8 @@ export class Products implements OnInit {
       this.typeFilter = params.get('type');
       this.categoryFilter = params.get('category');
       
-      console.log('Query Params:', { 
-        gender: this.genderFilter, 
-        type: this.typeFilter, 
-        category: this.categoryFilter 
-      });
-      
       this.productService.getProducts().subscribe({
         next: (data) => {
-          console.log('Raw products data:', data);
-          console.log('Unique genders:', [...new Set(data.map(p => p.gender))]);
           this.products = data;
           this.filterAndMapProducts();
         },
@@ -186,10 +179,20 @@ export class Products implements OnInit {
     this.showSortDropdown = !this.showSortDropdown;
   }
 
-  selectSortOption(option: string) {
+  onSortOptionSelected(option: string): void {
     this.selectedSortOption = option;
-    this.showSortDropdown = false; // Close dropdown after selection
+    this.showSortDropdown = false;
     this.sortMappedProducts();
+  }
+
+  onProductClick(product: any, event: Event): void {
+    event.preventDefault();
+    // Navigate to product details page with product name
+    if (product && product.name) {
+      // Convert product name to URL-friendly format
+      const productName = product.name.toLowerCase().replace(/\s+/g, '-');
+      this.router.navigate(['/product-details', productName]);
+    }
   }
 
   toggleInStockOnly() {
