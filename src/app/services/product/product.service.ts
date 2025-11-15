@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 // Define a Product interface (adjust fields as needed)
 export interface Product {
@@ -47,7 +48,7 @@ export interface StockUpdateRequest {
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:3000/api/products'; // Your backend API endpoint
+  private apiUrl = `${environment.apiUrl}/api/products`;
 
   constructor(private http: HttpClient) {}
 

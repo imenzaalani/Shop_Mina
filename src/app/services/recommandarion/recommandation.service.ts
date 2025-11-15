@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 export interface ProductVariant {
   id: string;
@@ -39,7 +40,7 @@ export interface Product {
 })
 
 export class RecommendationService {
-  private readonly API_URL = 'http://localhost:3000/api/recommendations';
+  private API_URL = `${environment.apiUrl}/api/recommendations`;
 
   constructor(private http: HttpClient) {}
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 // Define a User interface (adjust fields as needed)
 export interface User {
@@ -20,7 +21,8 @@ export interface User {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:3000/api/users';
+  private apiUrl = `${environment.apiUrl}/api/users`;
+  
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER_KEY = 'currentUser';
 

@@ -6,6 +6,7 @@ import { loadStripe, Stripe, StripeElements, StripeCardElement } from '@stripe/s
 import { UserService } from '../../services/user/user.service';
 import { HttpClient } from '@angular/common/http';
 import { CouponService } from '../../services/coupon/coupon.service';
+import { environment } from '../../../environments/environment';
 
 declare var paypal: any;
 
@@ -236,7 +237,7 @@ export class Checkouts implements OnInit, AfterViewInit {
 
   async createPaymentIntent(amount: number): Promise<string> {
     // Replace with your backend API call
-    const response = await fetch('http://localhost:3000/api/payments/create-payment-intent', {
+    const response = await fetch(`${environment.apiUrl}/api/payments/create-payment-intent`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount }),
@@ -284,7 +285,7 @@ export class Checkouts implements OnInit, AfterViewInit {
   }
 
   async saveOrder(order: any) {
-    const response = await fetch('http://localhost:3000/api/orders', {
+    const response = await fetch(`${environment.apiUrl}/api/orders`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(order)

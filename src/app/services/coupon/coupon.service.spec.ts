@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CouponService, Coupon } from './coupon.service';
+import { environment } from '../../../environments/environment';
 
 describe('CouponService', () => {
   let service: CouponService;
@@ -32,7 +33,7 @@ describe('CouponService', () => {
       expect(coupons.length).toBe(2);
       expect(coupons).toEqual(dummyCoupons);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/coupons');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/coupons`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyCoupons);
   });
@@ -42,7 +43,7 @@ describe('CouponService', () => {
     service.createCoupon(newCoupon).subscribe(coupon => {
       expect(coupon).toEqual(newCoupon);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/coupons');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/coupons`);
     expect(req.request.method).toBe('POST');
     req.flush(newCoupon);
   });
@@ -52,7 +53,7 @@ describe('CouponService', () => {
     service.updateCoupon('1', updatedCoupon).subscribe(coupon => {
       expect(coupon).toEqual(updatedCoupon);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/coupons/1');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/coupons/1`);
     expect(req.request.method).toBe('PUT');
     req.flush(updatedCoupon);
   });
@@ -61,7 +62,7 @@ describe('CouponService', () => {
     service.deleteCoupon('1').subscribe(res => {
       expect(res).toEqual({ message: 'Coupon deleted' });
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/coupons/1');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/coupons/1`);
     expect(req.request.method).toBe('DELETE');
     req.flush({ message: 'Coupon deleted' });
   });

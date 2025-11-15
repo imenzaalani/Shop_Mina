@@ -5,6 +5,7 @@ import { ProductService, Product } from '../../services/product/product.service'
 import { ProductDetailsInfo } from '../../components/product-details-info/product-details-info';
 import { ProductDetailsTabs } from '../../components/product-details-tabs/product-details-tabs';
 import { RecentlyViewedProducts } from '../../components/recently-viewed-products/recently-viewed-products';
+import { environment } from '../../../environments/environment';
 
 interface Breadcrumb {
   label: string;
@@ -62,18 +63,17 @@ export class ProductDetails implements OnInit {
   }
 
   mapProduct(product: Product): any {
-    const backendUrl = 'http://localhost:3000';
     const images = (product.images || []).map(img =>
-      img.startsWith('http') ? img : backendUrl + img
+      img.startsWith('http') ? img : environment.apiUrl + img
     );
     const imageUrl = images.length > 0
       ? images[0]
-      : (product.imageUrl ? (product.imageUrl.startsWith('http') ? product.imageUrl : backendUrl + product.imageUrl) : '');
+      : (product.imageUrl ? (product.imageUrl.startsWith('http') ? product.imageUrl : environment.apiUrl + product.imageUrl) : '');
     const variants = (product.variants || []).map(v => ({
       ...v,
       color: v.color ? v.color.trim().toLowerCase() : v.color,
       size: v.size ? v.size.trim().toUpperCase() : v.size,
-      image: v.image ? (v.image.startsWith('http') ? v.image : backendUrl + v.image) : undefined
+      image: v.image ? (v.image.startsWith('http') ? v.image : environment.apiUrl + v.image) : undefined
     }));
     const colors = variants.length > 0
       ? [...new Set(variants.map(v => v.color))]

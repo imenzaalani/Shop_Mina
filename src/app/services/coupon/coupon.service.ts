@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
 
 export interface Coupon {
   _id?: string;
@@ -18,7 +20,7 @@ export interface Coupon {
 
 @Injectable({ providedIn: 'root' })
 export class CouponService {
-  private apiUrl = 'http://localhost:3000/api/coupons';
+  private apiUrl = `${environment.apiUrl}/api/coupons`;
 
   constructor(private http: HttpClient) {}
 
@@ -45,6 +47,6 @@ export class CouponService {
   }
 
   applyCoupon(code: string, total: number): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/apply-coupon', { code, total });
+    return this.http.post<any>(`${this.apiUrl}/api/apply-coupon`, { code, total });
   }
 } 

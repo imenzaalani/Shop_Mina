@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { OrderService, Order } from './order.service';
+import { environment } from '../../../environments/environment';
 
 describe('OrderService', () => {
   let service: OrderService;
@@ -32,7 +33,7 @@ describe('OrderService', () => {
       expect(orders.length).toBe(2);
       expect(orders).toEqual(dummyOrders);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/orders`);
     expect(req.request.method).toBe('GET');
     req.flush(dummyOrders);
   });
@@ -42,7 +43,7 @@ describe('OrderService', () => {
     service.createOrder(newOrder).subscribe(order => {
       expect(order).toEqual(newOrder);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/orders');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/orders`);
     expect(req.request.method).toBe('POST');
     req.flush(newOrder);
   });
@@ -52,7 +53,7 @@ describe('OrderService', () => {
     service.updateOrderStatus('1', 'shipped').subscribe(order => {
       expect(order).toEqual(updatedOrder);
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/orders/1/status');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/orders/1/status`);
     expect(req.request.method).toBe('PATCH');
     req.flush(updatedOrder);
   });
@@ -61,7 +62,7 @@ describe('OrderService', () => {
     service.deleteOrder('1').subscribe(res => {
       expect(res).toEqual({ message: 'Order deleted' });
     });
-    const req = httpMock.expectOne('http://localhost:3000/api/orders/1');
+    const req = httpMock.expectOne(`${environment.apiUrl}/api/orders/1`);
     expect(req.request.method).toBe('DELETE');
     req.flush({ message: 'Order deleted' });
   });

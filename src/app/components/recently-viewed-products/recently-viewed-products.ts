@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { RecommendationService, Product } from '../../services/recommandarion/recommandation.service';
 import { ProductCard } from '../product-card/product-card';
+import { environment } from '../../../environments/environment';
 
 interface ProductCollection {
   _id: string;
@@ -71,7 +72,6 @@ export class RecentlyViewedProducts implements OnInit {
     });
   }
 
-  private readonly BACKEND_URL = 'http://localhost:3000';
 
   // Helper method to ensure image URLs are complete
   private getImageUrl(url: string | undefined): string {
@@ -81,7 +81,7 @@ export class RecentlyViewedProducts implements OnInit {
     // If URL starts with /, remove the leading slash to prevent double slashes
     const cleanUrl = url.startsWith('/') ? url.substring(1) : url;
     // Combine with backend URL
-    return `${this.BACKEND_URL}/${cleanUrl}`;
+    return `${environment.apiUrl}/${cleanUrl}`;
   }
 
   // Map Product to ProductCollection for the product card

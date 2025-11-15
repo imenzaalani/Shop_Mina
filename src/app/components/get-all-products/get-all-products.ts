@@ -3,6 +3,7 @@ import { ProductService, Product } from '../../services/product/product.service'
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';  // Add this import
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-get-all-products',
@@ -125,10 +126,10 @@ export class GetAllProducts implements OnInit {
   getImageUrl(img: string): string {
     // If the image is already a full URL, return as is
     if (img.startsWith('/uploads/')) {
-      return `http://localhost:3000${img}`;
+      return `${environment.apiUrl}${img}`;
     }
     if (img.startsWith('http')) return img;
-    return `http://localhost:3000/uploads/${img}`;
+    return `${environment.apiUrl}/uploads/${img}`;
   }
 
   openImageModal(images: string[]): void {

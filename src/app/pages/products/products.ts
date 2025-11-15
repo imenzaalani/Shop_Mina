@@ -5,6 +5,7 @@ import { ProductService, Product } from '../../services/product/product.service'
 import { ActivatedRoute } from '@angular/router';
 import { ProductCard } from '../../components/product-card/product-card';
 import { FilterProducts } from '../../components/filter-products/filter-products';
+import { environment } from '../../../environments/environment';    
 
 @Component({
   selector: 'app-products',
@@ -139,8 +140,8 @@ export class Products implements OnInit {
 
     this.mappedProducts = filtered.map(product => ({
       name: product.name,
-      imageUrl: (product.images && product.images.length > 0) ? ('http://localhost:3000' + product.images[0]) : 'assets/images/placeholder.png',
-      images: product.images ? product.images.map(img => 'http://localhost:3000' + img) : [],
+      imageUrl: (product.images && product.images.length > 0) ? (environment.apiUrl + product.images[0]) : 'assets/images/placeholder.png',
+      images: product.images ? product.images.map(img => environment.apiUrl + img) : [],
       currentPrice: product.salePrice ?? product.regularPrice,
       oldPrice: product.salePrice ? product.regularPrice : undefined,
       discount: (product.salePrice && product.regularPrice) ? +((100 * (product.regularPrice - product.salePrice) / product.regularPrice).toFixed(0)) : undefined
