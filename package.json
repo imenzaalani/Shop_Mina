@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "postbuild": "mkdir -p dist/frontend/browser/browser/browser && cp -r dist/frontend/browser/* dist/frontend/browser/browser/browser/ 2>/dev/null || :",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
