@@ -2,10 +2,11 @@ import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { CartService, CartItem } from '../../services/cart/cart.service';
 import { Observable } from 'rxjs';
 import { AsyncPipe, DecimalPipe } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-cart-overlay',
-  imports: [DecimalPipe, AsyncPipe],
+  imports: [DecimalPipe, AsyncPipe, RouterModule],
   templateUrl: './shopping-cart-overlay.html',
   styleUrl: './shopping-cart-overlay.css',
 })
