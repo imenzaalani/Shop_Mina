@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { CartService, CartItem } from '../../services/cart/cart.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { loadStripe, Stripe, StripeElements, StripeCardElement } from '@stripe/stripe-js';
 import { UserService } from '../../services/user/user.service';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +14,7 @@ declare var paypal: any;
 @Component({
   selector: 'app-checkouts',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, DecimalPipe, FormsModule],
+  imports: [ReactiveFormsModule, CommonModule, DecimalPipe, FormsModule, RouterModule],
   templateUrl: './checkouts.html',
   styleUrls: ['./checkouts.css']
 })
@@ -304,14 +305,22 @@ export class Checkouts implements OnInit, AfterViewInit {
   }
 
   autoFillUserData() {
+
     if (this.userService.isLoggedIn()) {
       const currentUser = this.userService.getCurrentUser();
+      
       if (currentUser) {
-        this.checkoutForm.patchValue({
+        const formData = {
           email: currentUser.email || '',
           firstName: currentUser.firstName || '',
-          lastName: currentUser.lastName || ''
-        });
+          lastName: currentUser.lastName || '',
+          address: currentUser.address || '',
+          city: currentUser.city || '',
+          postalCode: currentUser.postalCode || '',
+          phone: currentUser.phone || ''
+        };
+        
+        this.checkoutForm.patchValue(formData);
       }
     }
   }

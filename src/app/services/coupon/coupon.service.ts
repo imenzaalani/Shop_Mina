@@ -46,7 +46,8 @@ export class CouponService {
     return this.http.delete<{ message: string }>(`${this.apiUrl}/${id}`);
   }
 
+
   applyCoupon(code: string, total: number): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/api/apply-coupon`, { code, total });
+  return this.http.post<any>(`${environment.apiUrl}/api/apply-coupon`, { code, total });
   }
 } 

@@ -23,7 +23,7 @@ export interface User {
 export class UserService {
   private apiUrl = `${environment.apiUrl}/api/users`;
   
-  private readonly TOKEN_KEY = 'auth_token';
+  private readonly TOKEN_KEY = 'token';
   private readonly USER_KEY = 'currentUser';
 
   constructor(private http: HttpClient) {}
@@ -58,8 +58,12 @@ export class UserService {
 
   // Get current user
   getCurrentUser() {
-    const user = localStorage.getItem(this.USER_KEY) || sessionStorage.getItem(this.USER_KEY);
-    return user ? JSON.parse(user) : null;
+    try {
+      const user = localStorage.getItem(this.USER_KEY) || sessionStorage.getItem(this.USER_KEY);
+      return user ? JSON.parse(user) : null;
+    } catch (error) {
+      return null;
+    }
   }
 
   // Logout

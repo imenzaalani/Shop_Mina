@@ -32,7 +32,7 @@
           <input type="checkbox" id="newsletter" formControlName="newsletter" />
           <label for="newsletter">Email me with news and offers</label>
           @if (!userService.isLoggedIn()) {
-            <a routerLink="/login" class="login-link">Log in</a>
+            <a [routerLink]="['/login']" [queryParams]="{ returnUrl: '/checkouts' }" class="login-link">Log in</a>
           } 
           @else {
             <span class="logged-in-indicator">

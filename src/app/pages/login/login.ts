@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { UserService } from '../../services/user/user.service';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 interface LoginResponse {
@@ -25,10 +25,13 @@ export class Login implements OnInit {
   submitted = false;
   loginError: string = '';
 
+  private returnUrl: string = '/products';
+
   constructor(
     private fb: FormBuilder, 
     private userService: UserService, 
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -41,6 +44,11 @@ export class Login implements OnInit {
     if (this.userService.isLoggedIn()) {
       this.router.navigate(['/']);
     }
+
+    // Get the return URL from route parameters or default to '/products'
+    this.route.queryParams.subscribe(params => {
+      this.returnUrl = params['returnUrl'] || '/products';
+    });
   }
 
   onSubmit(): void {
@@ -73,7 +81,8 @@ export class Login implements OnInit {
           if (user.role === 'admin') {
             this.router.navigate(['/dashboard']);
           } else {
-            this.router.navigate(['/products']);
+            // Redirect to the return URL or default to '/products'
+            this.router.navigateByUrl(this.returnUrl);
           }
         } else {
           this.loginError = 'Invalid response from server. Please try again.';
